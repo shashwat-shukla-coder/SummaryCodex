@@ -1,4 +1,4 @@
-#Dependencies
+# Dependencies
 bcrypt: ^5.1.1
 concurrently: ^9.0.1
 cors: ^2.8.5
