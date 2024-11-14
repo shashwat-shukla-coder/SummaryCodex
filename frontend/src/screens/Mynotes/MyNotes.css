@@ -1,0 +1,50 @@
+/* Remove background and border on Accordion button when clicked */
+.accordion-button:not(.collapsed) {
+  background-color: transparent;  /* No background color when clicked */
+  box-shadow: none;                /* Remove box-shadow */
+  color: inherit;                  /* Retain original text color */
+  border: none;                    /* Remove border */
+  outline: none;                   /* Remove outline on focus */
+}
+
+/* Remove default styles for collapsed accordion buttons */
+.accordion-button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;                  /* Remove outline on focus */
+}
+
+/* Remove hover effect on Accordion button */
+.accordion-button:hover {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Remove focus styling that happens on click */
+.accordion-button:focus {
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  border: none;
+}
+/* MyNotes.css */
+
+.markdown {
+  color: black; /* Change text color to black */
+  font-size: 16px; /* Adjust the font size */
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-size: inherit; /* Remove inherited styles */
+}
+
+.markdown p {
+  margin: 0.5em 0; /* Add margin for paragraphs */
+}

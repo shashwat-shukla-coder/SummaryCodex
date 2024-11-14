@@ -1,0 +1,77 @@
+.main {
+  min-height: 93vh;
+  display: flex;
+  align-items: center;
+  background-image: url(./background.jpg);
+  background-position: center;
+  background-size: cover;
+  transition: filter 0.3s ease;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 3rem;
+  color: #00ef93; /* Dark color for better visibility */
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Adds shadow */
+}
+
+p {
+  font-weight: bold;
+  font-size: 2.5rem;
+  font-style: italic;
+  color: #eaff00; /* Darker shade for visibility */
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
+}
+
+.intro-text {
+  width: 100%;
+  font-weight: bold;
+  font-size: 2.5rem;
+  font-style: italic;
+  color: #eaff00; /* Darker shade for visibility */
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
+  text-align: center;
+}
+
+.buttonContainer {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center; /* Aligns buttons to the center */
+  font-size: 1.5rem;
+  width: 100%;
+}
+
+.buttonContainer button {
+  margin-right: 25px;
+  min-width: 90px;
+  min-height: 45px;
+}
+
+.buttonContainer button:hover {
+  background-color: #008000;
+  color: white;
+}
+
+.blur-background {
+  filter: blur(5px); /* Apply the blur effect */
+}
+
+.login-container {
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  align-items: center;
+}
+.close-button {
+  /* height: 10px; */
+  align-self: flex-end;
+}
