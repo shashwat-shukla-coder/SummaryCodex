@@ -20,9 +20,6 @@ app.use("/notes", noteRoutes); // via this i can hit note routes
 app.use(notFound);
 app.use(ErrorHandling);
 
-
-
 app.listen(port, () => {
   console.log(`Server is running on port no  ${port}`);
 });
-

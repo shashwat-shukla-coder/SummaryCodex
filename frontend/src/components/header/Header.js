@@ -11,8 +11,7 @@ import { logout } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-
-function Header() {
+function Header({ setSearch }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -40,6 +39,7 @@ function Header() {
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
+                onChange={(e) => setSearch(e.target.value)}
               />
               <Button variant="primary" className="ml-1">
                 Search
@@ -63,10 +63,6 @@ function Header() {
             <NavDropdown title="Name" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/profile">
                 My Profile
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/bookmark">
-                My Bookmarked Notes
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logoutHandler}>
