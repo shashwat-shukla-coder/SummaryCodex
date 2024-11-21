@@ -63,9 +63,9 @@ const SingleNote = () => {
   };
 
   return (
-    <MainScreen title="Create a Note">
+    <MainScreen title="Edit Note">
       <Card>
-        <Card.Header>Update a Note</Card.Header>
+        <Card.Header>Edit Note</Card.Header>
         <Card.Body>
           <Form onSubmit={updateHandler}>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
@@ -92,9 +92,8 @@ const SingleNote = () => {
             {content && (
               <Card>
                 <Card.Header>Note Preview</Card.Header>
-            
+
                 <ReactMarkdown>{content}</ReactMarkdown>
-                
               </Card>
             )}
 

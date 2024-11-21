@@ -18,7 +18,8 @@ const MyNotes = ({ search }) => {
   const { loading, error, notes } = noteList;
 
   const userInfo = localStorage.getItem("userInfo");
-
+  const name = userInfo ? JSON.parse(userInfo) : null;
+  const newname = name && name.username ? name.username : "unknown";
   const noteDelete = useSelector((state) => state.noteDelete);
   const {
     loading: loadingDelete,
@@ -44,10 +45,17 @@ const MyNotes = ({ search }) => {
     } else {
       navigate("/");
     }
-  }, [dispatch, userInfo, successDelete, successCreate, successUpdate, navigate]);
+  }, [
+    dispatch,
+    userInfo,
+    successDelete,
+    successCreate,
+    successUpdate,
+    navigate,
+  ]);
 
   return (
-    <MainScreen title={`Welcome Back ..`}>
+    <MainScreen title={`${newname} Notes...`}>
       <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create new Note

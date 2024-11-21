@@ -16,6 +16,10 @@ function Header({ setSearch }) {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  // if (userInfo != null) {
+  //   console.log(userInfo);
+  //   const name = userInfo.username;
+  // }
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -60,8 +64,9 @@ function Header({ setSearch }) {
                 My Notes
               </Link>
             </Navbar.Brand>
-            <NavDropdown title="Name" id="navbarScrollingDropdown">
-              
+           <NavDropdown title={userInfo ? userInfo.username : "Name"} id="navbarScrollingDropdown">
+  
+
               <NavDropdown.Item onClick={logoutHandler}>
                 Logout
               </NavDropdown.Item>
