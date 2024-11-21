@@ -33,7 +33,8 @@ Welcome to **NoteCodex**! This application is designed to help users create, man
 
 Before running this project, ensure you have the following installed:  
 - Node.js  
-- MongoDB  
+- MongoDB
+- dotenv for the enivroment variables  
 
 ---
 
