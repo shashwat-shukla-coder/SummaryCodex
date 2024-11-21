@@ -2,13 +2,14 @@
 .register-form {
   max-width: 350px;
   height: 75%; /* Set height to 75% of its current size */
-  margin: 30px auto; /* Reduced top margin */
-  padding: 15px; /* Reduced padding */
+  margin: 5px auto; /* Reduced top margin */
+  padding: 10px; /* Reduced padding */
   background-color: #f5f5f5; /* Light background */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
   font-family: Arial, sans-serif;
   overflow: hidden; /* Ensure no content overflows */
+  z-index: 2;
 }
 
 /* Style the labels */
@@ -22,8 +23,8 @@
 /* Style the input fields */
 .register-form input {
   width: 100%;
-  padding: 8px; /* Reduced padding */
-  margin-bottom: 15px; /* Even spacing between input fields */
+  padding: 5px; /* Reduced padding */
+  margin-bottom: 10px; /* Even spacing between input fields */
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -33,22 +34,21 @@
 /* Input focus state */
 .register-form input:focus {
   outline: none;
-  border-color: #007bff; 
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5); 
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
 }
 
 /* Aligning the button */
 .register-form button {
   width: 100%;
-  padding: 8px; 
-  font-size: 16px; 
+  padding: 8px;
+  font-size: 16px;
   background-color: #007bff;
   border: none;
   border-radius: 5px;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
 }
 
 /* Button hover effect */

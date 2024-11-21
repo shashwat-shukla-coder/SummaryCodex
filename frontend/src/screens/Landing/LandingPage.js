@@ -16,6 +16,7 @@ const LandingPage = () => {
     setShowRegister(true);
     setShowLogin(false); // Hide login when showing register
   };
+
   const handleClose = () => {
     setShowLogin(false);
     setShowRegister(false);
@@ -29,8 +30,8 @@ const LandingPage = () => {
         <Container>
           <Row>
             <div className="intro-text">
-              <h1>Welcome to Note Codex</h1>
-              <p>We keep track of all your notes</p>
+              <h1 className="intro1">Welcome to Note Codex</h1>
+              <h2 className="intro2">We keep track of all your notes</h2>
             </div>
             <div className="buttonContainer">
               <Button onClick={handleLoginClick} size="lg" variant="primary">
@@ -53,7 +54,7 @@ const LandingPage = () => {
           >
             X
           </Button>
-          <Login onSignUpClick={handleRegisterClick} />
+          <Login onSignUpClick={handleRegisterClick} />{/* to open register via login slide */}
         </div>
       )}
 

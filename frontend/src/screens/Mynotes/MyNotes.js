@@ -7,9 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { listNotes } from "../../actions/noteActions";
 import ErrorMessage from "../../components/ErrorMessage";
 import Loading from "../../components/Loadingcomp/Loading";
-
+import ReactMarkdown from "react-markdown";
 import { deleteNoteAction } from "../../actions/noteActions";
-
 import "./MyNotes.css";
 
 const MyNotes = ({ search }) => {
@@ -45,7 +44,7 @@ const MyNotes = ({ search }) => {
     } else {
       navigate("/");
     }
-  }, [dispatch, userInfo, successDelete, successCreate, successUpdate]);
+  }, [dispatch, userInfo, successDelete, successCreate, successUpdate, navigate]);
 
   return (
     <MainScreen title={`Welcome Back ..`}>
@@ -104,7 +103,8 @@ const MyNotes = ({ search }) => {
                     <h4>
                       <Badge bg="success">Category - {note.category}</Badge>
                     </h4>
-                    <h4>{note.content}</h4>
+                    {/* <h4>{note.content}</h4> */}
+                    <ReactMarkdown>{note.content}</ReactMarkdown>
                     <footer className="blockquote-footer">
                       created on - {new Date().toLocaleDateString()}
                     </footer>

@@ -13,7 +13,6 @@ const middleWare = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
     req.user = await User.findById(decoded.id).select("-password");
-    console.log("all good"); // Attach user to req
     next(); // Call the next middleware or route handler
   } catch (error) {
     console.log("you found the error error in middle ware");

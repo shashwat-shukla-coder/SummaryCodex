@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import "./Register.css";
 import Loading from "../Loadingcomp/Loading";
@@ -14,14 +14,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
-  useEffect(() => {
-    if (userInfo) {
-      navigate("/");
-    }
-  }, [navigate, userInfo]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -29,7 +24,7 @@ const Register = () => {
       return;
     }
     dispatch(register(username, password, email));
-
+    window.location.reload();
   };
 
   return (

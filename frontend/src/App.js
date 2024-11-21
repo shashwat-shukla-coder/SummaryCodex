@@ -4,6 +4,7 @@ import Footer from "./components/footer/Footer";
 import LandingPage from "./screens/Landing/LandingPage";
 import MyNotes from "./screens/Mynotes/MyNotes";
 import CreateNote from "./screens/NewNote/CreateNote";
+import SingleNote from "./screens/NewNote/SingleNote";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<LandingPage />} exact />
             <Route path="/mynotes" element={<MyNotes search={search} />} />
             <Route path="/createnote" element={<CreateNote />} />
+            <Route path="/note/:id" element={<SingleNote />} />
           </Routes>
         </main>
         <Footer />

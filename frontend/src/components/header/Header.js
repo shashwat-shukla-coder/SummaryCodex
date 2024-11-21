@@ -61,10 +61,7 @@ function Header({ setSearch }) {
               </Link>
             </Navbar.Brand>
             <NavDropdown title="Name" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/profile">
-                My Profile
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
+              
               <NavDropdown.Item onClick={logoutHandler}>
                 Logout
               </NavDropdown.Item>

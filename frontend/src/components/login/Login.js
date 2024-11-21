@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +27,7 @@ const Login = ({ onSignUpClick }) => {
     } else {
       navigate("/");
     }
-  }, [navigate,userInfo]);
+  }, [navigate, userInfo]);
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
