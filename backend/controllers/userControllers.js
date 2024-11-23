@@ -23,6 +23,7 @@ const signUpUser = async (req, res) => {
     // Create a new user
     const newUser = new User({ username, password: hashedPassword, email });
     await newUser.save();
+
     // Respond with a success message
     res.status(201).json({ message: "Signup successful! Please log in." });
   } catch (e) {

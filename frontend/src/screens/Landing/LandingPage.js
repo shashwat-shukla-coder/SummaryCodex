@@ -5,33 +5,27 @@ import Register from "../../components/register/Register";
 import { Container, Row, Button } from "react-bootstrap";
 
 const LandingPage = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
 
   const handleLoginClick = () => {
-    setShowLogin(true);
-    setShowRegister(false);
+    setActiveModal("login");
   };
   const handleRegisterClick = () => {
-    setShowRegister(true);
-    setShowLogin(false); // Hide login when showing register
+    setActiveModal("register");
   };
 
   const handleClose = () => {
-    setShowLogin(false);
-    setShowRegister(false);
+    setActiveModal(null);
   };
 
   return (
     <>
-      <div
-        className={`main ${showLogin || showRegister ? "blur-background" : ""}`}
-      >
+      <div className={`main ${activeModal ? "blur-background" : ""}`}>
         <Container>
           <Row>
             <div className="intro-text">
-              <h1 className="intro1">Welcome to Note Codex</h1>
-              <h2 className="intro2">We keep track of all your notes</h2>
+              <h1 className="intro1">Note Codex</h1>
+              <h2 className="intro2">All notes in one place</h2>
             </div>
             <div className="buttonContainer">
               <Button onClick={handleLoginClick} size="lg" variant="primary">
@@ -45,7 +39,7 @@ const LandingPage = () => {
         </Container>
       </div>
 
-      {showLogin && (
+      {activeModal === "login" && (
         <div className="login-container">
           <Button
             variant="secondary"
@@ -54,11 +48,12 @@ const LandingPage = () => {
           >
             X
           </Button>
-          <Login onSignUpClick={handleRegisterClick} />{/* to open register via login slide */}
+          <Login onSignUpClick={handleRegisterClick} />
+          {/* to open register via login slide */}
         </div>
       )}
 
-      {showRegister && (
+      {activeModal === "register" && (
         <div className="login-container">
           <Button
             variant="secondary"
@@ -67,7 +62,7 @@ const LandingPage = () => {
           >
             X
           </Button>
-          <Register />
+          <Register activeModal={setActiveModal} />
         </div>
       )}
     </>

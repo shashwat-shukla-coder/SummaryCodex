@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ activeModal }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,7 +15,7 @@ const Register = () => {
 
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const { loading, error } = userRegister;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,15 +23,18 @@ const Register = () => {
       alert("Passwords do not match");
       return;
     }
-    dispatch(register(username, password, email));
-    window.location.reload();
+    try {
+      dispatch(register(username, password, email));
+    } catch (error) {
+      console.log("unable to sign in due to " + error);
+    }
   };
 
   return (
     <form className="register-form p3 " onSubmit={handleSubmit}>
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-      {loading && <Loading />}
       <div>
+        {loading && <Loading />}
         <label>
           Username:
           <input
@@ -75,6 +78,7 @@ const Register = () => {
           />
         </label>
       </div>
+
       <br />
       <Button type="submit" variant="primary" size="lg">
         Register

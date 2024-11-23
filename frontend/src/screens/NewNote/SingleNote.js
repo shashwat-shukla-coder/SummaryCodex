@@ -97,7 +97,7 @@ const SingleNote = () => {
               </Card>
             )}
 
-            <Form.Group controlId="category">
+            <Form.Group controlId="category" style={{ marginBottom: "1rem" }}>
               <Form.Label>Category</Form.Label>
               <Form.Control
                 type="text"
@@ -107,7 +107,7 @@ const SingleNote = () => {
               />
             </Form.Group>
             {loading && <Loading size={50} />}
-            <Button type="submit" variant="primary" gap={2}>
+            <Button type="submit" variant="primary">
               Update Note
             </Button>
             <Button className="mx-2" onClick={resetHandler} variant="danger">
@@ -117,7 +117,10 @@ const SingleNote = () => {
         </Card.Body>
 
         <Card.Footer className="text-muted">
-          Creating on - {new Date().toLocaleDateString()}
+          updated on -{" "}
+          {date.substring(0, 10)
+            ? date.substring(0, 10)
+            : new Date().toISOString().substring(0, 10)}
         </Card.Footer>
       </Card>
     </MainScreen>

@@ -1,7 +1,7 @@
 /* Container for the form */
 .register-form {
   max-width: 350px;
-  height: 75%; /* Set height to 75% of its current size */
+  height: 100%; /* Set height to 75% of its current size */
   margin: 5px auto; /* Reduced top margin */
   padding: 10px; /* Reduced padding */
   background-color: #f5f5f5; /* Light background */
@@ -9,12 +9,12 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
   font-family: Arial, sans-serif;
   overflow: hidden; /* Ensure no content overflows */
-  z-index: 2;
+  z-index: 1;
 }
 
 /* Style the labels */
 .register-form label {
-  display: block;
+  display: inline;
   font-weight: bold;
   margin-bottom: 5px; /* Consistent margin for all labels */
   color: #333; /* Darker color for labels */
@@ -23,7 +23,7 @@
 /* Style the input fields */
 .register-form input {
   width: 100%;
-  padding: 5px; /* Reduced padding */
+  padding: 10px; /* Reduced padding */
   margin-bottom: 10px; /* Even spacing between input fields */
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -56,15 +56,10 @@
   background-color: #0056b3; /* Darker blue */
 }
 
-/* Optional: Add spacing between form groups */
-.register-form div {
-  margin-bottom: 15px; /* Consistent spacing between div elements */
-}
-
 /* Ensure responsiveness */
-@media (max-width: 600px) {
+@media (max-width: 400px) {
   .register-form {
     width: 90%;
-    padding: 10px; /* Further reduced padding for small screens */
+    padding: 5px; /* Further reduced padding for even smaller screens */
   }
 }

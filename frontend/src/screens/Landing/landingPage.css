@@ -19,8 +19,15 @@
   font-weight: bold;
   font-size: 2.5rem;
   font-style: italic;
-  color: #4f46b4; /* Darker shade for visibility */
-  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
+  color: #ffffff; /* Darker shade for visibility */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
+}
+.intro1 {
+  font-weight: bold;
+  font-size: 2.5rem;
+  font-style: italic;
+  color: #ffffff; /* Darker shade for visibility */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
 }
 
 .intro-text {
@@ -28,7 +35,7 @@
   font-weight: bold;
   font-size: 2.5rem;
   font-style: italic;
-  color: #4f46b4; /* Darker shade for visibility */
+  /* color: #000000; */
   text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
   text-align: center;
 }
@@ -44,12 +51,15 @@
 .buttonContainer button {
   margin-right: 25px;
   min-width: 90px;
-  min-height: 45px;
+  min-height: 35px;
+  border-radius: 3.5px;
+  background-color: #000000;
+  box-shadow: inherit #ffffff 0 1px;
 }
 
 .buttonContainer button:hover {
-  background-color: #008000;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
 }
 
 .blur-background {
@@ -73,4 +83,16 @@
 }
 .close-button {
   align-self: flex-end;
+}
+@media (max-width: 600px) {
+  .login-container {
+    width: 70%; /* Wider form for better visibility */
+    padding: 10px;
+    min-height: 50%; /* Reduced height for compact appearance */
+  }
+
+  .login-container button {
+    padding: 10px; /* Bigger buttons for mobile */
+    font-size: 12px; /* Increased font size for better usability */
+  }
 }

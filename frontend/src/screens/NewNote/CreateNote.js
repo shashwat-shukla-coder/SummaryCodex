@@ -12,12 +12,12 @@ const CreateNote = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
-
+  const [createdAt , setCreatedAt] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize navigate
 
   const noteCreate = useSelector((state) => state.noteCreate);
-  const { loading, error, note } = noteCreate;
+  const { loading, error} = noteCreate;
 
   const resetHandler = () => {
     setTitle("");
@@ -28,8 +28,8 @@ const CreateNote = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(createNoteAction(title, content, category));
+    setCreatedAt(new Date().toISOString());
     if (!title || !content || !category) return;
-
     resetHandler();
     navigate("/mynotes"); // Navigate to the 'mynotes' page after note is created
   };
@@ -90,7 +90,9 @@ const CreateNote = () => {
         </Card.Body>
 
         <Card.Footer className="text-muted">
-          Creating on - {new Date().toLocaleDateString()}
+          {createdAt
+            ? `Created on - ${createdAt}`
+            : "Creating on - Not Set Yet"}
         </Card.Footer>
       </Card>
     </MainScreen>

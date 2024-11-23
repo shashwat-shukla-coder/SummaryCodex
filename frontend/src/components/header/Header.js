@@ -16,20 +16,20 @@ function Header({ setSearch }) {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  // if (userInfo != null) {
-  //   console.log(userInfo);
-  //   const name = userInfo.username;
-  // }
-
   const logoutHandler = () => {
     dispatch(logout());
     navigate("/");
   };
   useEffect(() => {}, [userInfo]);
   return (
-    <Navbar expand="lg" className="bg-body-tertiary" variant="dark" bg="info">
+    <Navbar
+      expand="lg"
+      className=" bg-body-tertiary sticky-top"
+      variant="dark"
+      style={{ backgroundColor: "indigo" }}
+    >
       <Container>
-        <Navbar.Brand style={{ color: "red", fontWeight: "bold" }}>
+        <Navbar.Brand style={{ color: "yellow", fontWeight: "bold" }}>
           <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
             Note Codex
           </Link>
@@ -64,9 +64,10 @@ function Header({ setSearch }) {
                 My Notes
               </Link>
             </Navbar.Brand>
-           <NavDropdown title={userInfo ? userInfo.username : "Name"} id="navbarScrollingDropdown">
-  
-
+            <NavDropdown
+              title={userInfo ? userInfo.username : "guest"}
+              id="navbarScrollingDropdown"
+            >
               <NavDropdown.Item onClick={logoutHandler}>
                 Logout
               </NavDropdown.Item>

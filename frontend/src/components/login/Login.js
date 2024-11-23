@@ -14,20 +14,17 @@ const Login = ({ onSignUpClick }) => {
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
-
+  const { loading, error } = userLogin;
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(username, password));
   };
-
+  const userInfo = localStorage.getItem("userInfo");
   useEffect(() => {
     if (userInfo) {
       navigate("/mynotes");
-    } else {
-      navigate("/");
     }
-  }, [navigate, userInfo]);
+  }, [userInfo, navigate]);
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
