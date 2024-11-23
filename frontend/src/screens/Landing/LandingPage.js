@@ -22,16 +22,28 @@ const LandingPage = () => {
     <>
       <div className={`main ${activeModal ? "blur-background" : ""}`}>
         <Container>
-          <Row>
+          <Row className="justify-content-center text-center">
             <div className="intro-text">
               <h1 className="intro1">Note Codex</h1>
               <h2 className="intro2">All notes in one place</h2>
             </div>
+          </Row>
+          <Row className="justify-content-center">
             <div className="buttonContainer">
-              <Button onClick={handleLoginClick} size="lg" variant="primary">
-                Login
+              <Button
+                onClick={handleLoginClick}
+                size="lg"
+                variant="primary"
+                className="m-2"
+              >
+                Sign In
               </Button>
-              <Button onClick={handleRegisterClick} size="lg" variant="primary">
+              <Button
+                onClick={handleRegisterClick}
+                size="lg"
+                variant="primary"
+                className="m-2"
+              >
                 Sign Up
               </Button>
             </div>

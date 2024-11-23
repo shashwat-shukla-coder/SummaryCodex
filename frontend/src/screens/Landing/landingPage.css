@@ -8,53 +8,51 @@
   transition: filter 0.3s ease;
 }
 
-.title {
-  font-weight: bold;
-  font-size: 3rem;
-  color: #00ef93; /* Dark color for better visibility */
-  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Adds shadow */
+.intro-text {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centers children horizontally */
+  align-items: center; /* Centers children vertically */
+  flex-direction: column; /* Aligns children vertically in a column */
+  text-align: center; /* Ensures text inside each child is centered */
 }
 
+.intro1,
 .intro2 {
   font-weight: bold;
   font-size: 2.5rem;
   font-style: italic;
-  color: #ffffff; /* Darker shade for visibility */
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
-}
-.intro1 {
-  font-weight: bold;
-  font-size: 2.5rem;
-  font-style: italic;
-  color: #ffffff; /* Darker shade for visibility */
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
+  color: #ffffff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9); /* Same shadow for both */
+  margin: 10px 0; /* Adds space between the intro1 and intro2 */
 }
 
-.intro-text {
-  width: 100%;
-  font-weight: bold;
-  font-size: 2.5rem;
-  font-style: italic;
-  /* color: #000000; */
-  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Same shadow as .title */
-  text-align: center;
+/* Additional specific styles for .intro2 */
+.intro2 {
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Different shadow */
 }
 
 .buttonContainer {
   margin-top: 50px;
   display: flex;
-  justify-content: center; /* Aligns buttons to the center */
-  font-size: 1.5rem;
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Center the buttons vertically */
+  font-size: 1.5rem; /* Adjusts the font size of the buttons */
   width: 100%;
 }
 
 .buttonContainer button {
-  margin-right: 25px;
-  min-width: 90px;
-  min-height: 35px;
-  border-radius: 3.5px;
-  background-color: #000000;
-  box-shadow: inherit #ffffff 0 1px;
+  margin-right: 25px; /* Adds spacing between buttons */
+  min-width: 100px; /* Standardizes button width */
+  min-height: 40px; /* Standardizes button height */
+  padding: 0 20px; /* Adds padding for consistency */
+  border-radius: 3.5px; /* Rounded corners for buttons */
+  background-color: #000000; /* Background color */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Slight shadow for buttons */
+  color: #ffffff; /* Text color for buttons */
+  text-align: center; /* Center the text inside the button */
+  width: 150px;
+  
 }
 
 .buttonContainer button:hover {

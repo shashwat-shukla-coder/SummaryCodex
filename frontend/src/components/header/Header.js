@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import "./Header.css"
 
 function Header({ setSearch }) {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Header({ setSearch }) {
                 aria-label="Search"
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button variant="primary" className="ml-1">
+              <Button variant="primary" className="ml-1 custom-button">
                 Search
               </Button>
             </Form>
