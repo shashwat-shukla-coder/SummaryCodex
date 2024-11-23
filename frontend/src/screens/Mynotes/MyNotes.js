@@ -76,7 +76,14 @@ const MyNotes = ({ search }) => {
           .map((note) => (
             <Accordion key={note._id}>
               <Card style={{ margin: 10 }}>
-                <Card.Header style={{ display: "flex" }}>
+                <Card.Header
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <span
                     style={{
                       color: "black",
@@ -85,6 +92,10 @@ const MyNotes = ({ search }) => {
                       cursor: "pointer",
                       alignSelf: "center",
                       fontSize: 18,
+                      maxWidth: "70%", // Limit title width
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
                   >
                     <Accordion.Item eventKey="${note._id}"></Accordion.Item>
@@ -92,9 +103,10 @@ const MyNotes = ({ search }) => {
                       {note.title}
                     </Accordion.Header>
                   </span>
-                  <div>
+                  <div
+                    style={{ display: "flex", gap: "8px", marginTop: "8px" }}
+                  >
                     <Button href={`/note/${note._id}`}>Edit</Button>
-
                     <Button
                       variant="danger"
                       className="mx-2"
