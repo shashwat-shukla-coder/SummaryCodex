@@ -1,4 +1,4 @@
-# NoteCodex  
+# NoteCodex  **Deployed at**: [https://notecodex.onrender.com/](https://notecodex.onrender.com/)
 **A Feature-Rich, Secure Note-Taking and Storage Application**  
 
 Welcome to **NoteCodex**! This application is designed to help users create, manage, and securely store notes with ease. Built with the MERN (MongoDB, Express, React, Node.js) stack, it provides a seamless and responsive user experience for note-taking.  
