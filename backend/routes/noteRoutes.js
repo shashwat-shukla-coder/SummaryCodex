@@ -6,6 +6,7 @@ const {
   CreateNote,
   UpdateNote,
   DeleteNote,
+  Updatebookmark,
 } = require("../controllers/noteControllers.js");
 const router = express.Router();
 
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.route("/").get(authMiddleware, getAllNotes);
 router.route("/create").post(authMiddleware, CreateNote);
+router.route("/bookmark/:id").put(authMiddleware, Updatebookmark);
 
 // Route to get a single note by ID
 router

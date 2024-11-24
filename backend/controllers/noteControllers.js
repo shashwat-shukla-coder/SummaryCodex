@@ -77,6 +77,41 @@ const UpdateNote = async (req, res) => {
     throw new Error("Note not found");
   }
 };
+const Updatebookmark = async function (req, res) {
+  try {
+    // Find the note by ID
+    const reqNote = await Note.findById(req.params.id);
+
+    // Check if the note exists
+    if (!reqNote) {
+      res.status(404).json({ message: "Note not found" });
+      return;
+    }
+
+    // Verify the note belongs to the authenticated user
+    if (reqNote.user.toString() !== req.user._id.toString()) {
+      res
+        .status(401)
+        .json({ message: "You are not authorized to perform this action" });
+      return;
+    }
+
+    // Toggle the bookmark field
+    reqNote.bookmark = !reqNote.bookmark;
+
+    // Save the updated note
+    await reqNote.save();
+
+    // Respond with the updated bookmark status
+    res.status(200).json({
+      message: "Bookmark status updated successfully",
+      bookmark: reqNote.bookmark,
+    });
+  } catch (error) {
+    // Handle server errors
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 
 module.exports = {
   getAllNotes,
@@ -84,4 +119,5 @@ module.exports = {
   CreateNote,
   DeleteNote,
   UpdateNote,
+  Updatebookmark,
 };

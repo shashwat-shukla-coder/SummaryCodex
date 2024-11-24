@@ -1,14 +1,13 @@
-import React from "react";
-import MainScreen from "../../components/MainScreen/MainScreen";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Accordion, Badge } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listNotes } from "../../actions/noteActions";
+import { listNotes, deleteNoteAction } from "../../actions/noteActions";
 import ErrorMessage from "../../components/ErrorMessage";
 import Loading from "../../components/Loadingcomp/Loading";
 import ReactMarkdown from "react-markdown";
-import { deleteNoteAction } from "../../actions/noteActions";
+import axios from "axios";
+import MainScreen from "../../components/MainScreen/MainScreen";
 import "./MyNotes.css";
 
 const MyNotes = ({ search }) => {
@@ -16,26 +15,62 @@ const MyNotes = ({ search }) => {
   const dispatch = useDispatch();
   const noteList = useSelector((state) => state.noteList);
   const { loading, error, notes } = noteList;
-
   const userInfo = localStorage.getItem("userInfo");
+
   const name = userInfo ? JSON.parse(userInfo) : null;
   const newname = name && name.username ? name.username : "unknown";
+
   const noteDelete = useSelector((state) => state.noteDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
   } = noteDelete;
+  const [showBookmark, setShowBookmark] = useState(false);
+  const [bookmarkStatus, setBookmarkStatus] = useState({}); // Track bookmark status for each note
+  // Initialize bookmarkStatus state from notes
+  useEffect(() => {
+    if (notes) {
+      const initialStatus = notes.reduce((acc, note) => {
+        acc[note._id] = note.bookmark || false;
+        return acc;
+      }, {});
+      setBookmarkStatus(initialStatus);
+    }
+  }, [notes]);
 
-  const noteCreate = useSelector((state) => state.noteCreate);
-  const { success: successCreate } = noteCreate;
-
-  const noteUpdate = useSelector((state) => state.noteUpdate);
-  const { success: successUpdate } = noteUpdate;
-
+  // Function to handle deleting notes
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
+    }
+  };
+
+  // Toggle bookmark for each note
+  const toggleBookmark = async (id) => {
+    const token = JSON.parse(userInfo).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.put(`/notes/bookmark/${id}/`, {}, config);
+      if (data) {
+        // Update bookmark status locally
+        setBookmarkStatus((prev) => ({
+          ...prev,
+          [id]: data.bookmark,
+        }));
+      } else {
+        console.error("No data in response");
+      }
+    } catch (error) {
+      console.error(
+        "Error updating bookmark:",
+        error.response?.data?.message || error.message
+      );
     }
   };
 
@@ -49,9 +84,9 @@ const MyNotes = ({ search }) => {
     dispatch,
     userInfo,
     successDelete,
-    successCreate,
-    successUpdate,
     navigate,
+    showBookmark,
+    setShowBookmark,
   ]);
 
   return (
@@ -61,16 +96,29 @@ const MyNotes = ({ search }) => {
           Create new Note
         </Button>
       </Link>
+
+      <Button
+        style={{ marginLeft: 10, marginBottom: 6 }}
+        size="lg"
+        onClick={() => setShowBookmark(!showBookmark)}
+        variant={showBookmark ? "success" : "primary"}
+      >
+        {showBookmark ? "Show All Notes" : "Show Bookmarked Notes"}
+      </Button>
+
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {errorDelete && (
         <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
       )}
       {loadingDelete && <Loading />}
       {loading && <Loading />}
+      {/* function chaining in js is crazy lol */}
       {notes &&
         notes
-          .filter((filteredNote) =>
-            filteredNote.title.toLowerCase().includes(search.toLowerCase())
+          .filter((note) =>
+            showBookmark
+              ? note.bookmark === true
+              : note.title.toLowerCase().includes(search.toLowerCase())
           )
           .reverse()
           .map((note) => (
@@ -98,21 +146,60 @@ const MyNotes = ({ search }) => {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    <Accordion.Item eventKey="${note._id}"></Accordion.Item>
-                    <Accordion.Header as="text" variant="link">
+                    <Accordion.Item eventKey={`${note._id}`}></Accordion.Item>
+                    <Accordion.Header
+                      as="text"
+                      variant="link"
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                      }}
+                    >
                       {note.title}
                     </Accordion.Header>
                   </span>
                   <div
-                    style={{ display: "flex", gap: "8px", marginTop: "8px" }}
+                    style={{
+                      display: "flex",
+                      gap: "3px",
+                      marginTop: "5px",
+                      padding: "1px",
+                    }}
                   >
-                    <Button href={`/note/${note._id}`}>Edit</Button>
+                    {/* Bookmark Button */}
+                    <Button
+                      onClick={() => toggleBookmark(note._id)}
+                      variant={bookmarkStatus[note._id] ? "warning" : "danger"} // Dynamic color
+                      style={{
+                        display: "flex", // Flexbox container
+                        justifyContent: "center", // Center horizontally
+                        alignItems: "center", // Center vertically
+                        padding: 10,
+                        width: 35, // Adjust width for better appearance
+                        height: 35, // Ensure height matches width
+                        textAlign: "center",
+                        borderRadius: "50%", // Optional: Make it circular
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="25" // Adjusted for better visibility
+                        height="25"
+                        fill="currentColor"
+                        className="bi bi-bookmark-fill"
+                        viewBox="0 0 16 16"
+                        color={bookmarkStatus[note._id] ? "black" : "white"}
+                      >
+                        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+                      </svg>
+                    </Button>
+                    <Button size="sm" href={`/note/${note._id}`}>
+                      Edit
+                    </Button>
                     <Button
                       variant="danger"
-                      className="mx-2"
-                      onClick={() => {
-                        deleteHandler(note._id);
-                      }}
+                      size="sm"
+                      onClick={() => deleteHandler(note._id)}
                     >
                       Delete
                     </Button>
@@ -123,10 +210,10 @@ const MyNotes = ({ search }) => {
                     <h4>
                       <Badge bg="success">Category - {note.category}</Badge>
                     </h4>
-                    {/* <h4>{note.content}</h4> */}
                     <ReactMarkdown>{note.content}</ReactMarkdown>
                     <footer className="blockquote-footer">
-                      created on - {new Date().toLocaleDateString()}
+                      created on -{" "}
+                      {new Date(note.createdAt).toLocaleDateString()}
                     </footer>
                   </Card.Body>
                 </Accordion.Body>
