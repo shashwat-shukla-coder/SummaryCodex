@@ -9,10 +9,11 @@ Welcome to **NoteCodex**! This application is designed to help users create, man
 
 - **CRUD Operations**: Create, Read, Update, and Delete notes effortlessly.  
 - **User Authentication**: Secure login and registration using **JWT-based authentication**.  
+- **Extra Features**: Bookmarks and Search features integration.  
 - **Markdown Compatibility**: Leverage **React Markdown** to format and render notes.  
 - **Responsive Design**: A clean, mobile-friendly UI built with **React-Bootstrap**.  
 - **State Management**: Centralized state management with **Redux** for better performance.  
-- **Error Handling**: Robust middleware for authorization, role-based access, and error handling.  
+- **Error Handling**: Robust middleware for authorization, role-based access, and error handling.
 
 ---
 
