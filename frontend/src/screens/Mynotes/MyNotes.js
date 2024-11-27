@@ -117,7 +117,8 @@ const MyNotes = ({ search }) => {
         notes
           .filter((note) =>
             showBookmark
-              ? note.bookmark === true
+              ? note.bookmark === true &&
+                note.title.toLowerCase().includes(search.toLowerCase())
               : note.title.toLowerCase().includes(search.toLowerCase())
           )
           .reverse()
@@ -153,6 +154,7 @@ const MyNotes = ({ search }) => {
                       style={{
                         fontSize: 16,
                         fontWeight: "bold",
+                        overflowX: "auto",
                       }}
                     >
                       {note.title}
@@ -206,7 +208,13 @@ const MyNotes = ({ search }) => {
                   </div>
                 </Card.Header>
                 <Accordion.Body>
-                  <Card.Body className="blockquote">
+                  <Card.Body
+                    className="blockquote"
+                    style={{
+                      maxHeight: "350px", // Set the maximum height of the content
+                      overflowY: "auto", // Enable vertical scrolling
+                    }}
+                  >
                     <h4>
                       <Badge bg="success">Category - {note.category}</Badge>
                     </h4>
