@@ -32,7 +32,7 @@ function Header({ setSearch }) {
       <Container>
         <Navbar.Brand style={{ color: "yellow", fontWeight: "bold" }}>
           <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-            Note Codex
+            Summary Lock
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

@@ -97,14 +97,7 @@ const MyNotes = ({ search }) => {
         </Button>
       </Link>
 
-      <Button
-        style={{ marginLeft: 10, marginBottom: 6 }}
-        size="lg"
-        onClick={() => setShowBookmark(!showBookmark)}
-        variant={showBookmark ? "success" : "primary"}
-      >
-        {showBookmark ? "Show All Notes" : "Show Bookmarked Notes"}
-      </Button>
+      
 
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {errorDelete && (
@@ -168,33 +161,7 @@ const MyNotes = ({ search }) => {
                       padding: "1px",
                     }}
                   >
-                    {/* Bookmark Button */}
-                    <Button
-                      onClick={() => toggleBookmark(note._id)}
-                      variant={bookmarkStatus[note._id] ? "warning" : "danger"} // Dynamic color
-                      style={{
-                        display: "flex", // Flexbox container
-                        justifyContent: "center", // Center horizontally
-                        alignItems: "center", // Center vertically
-                        padding: 10,
-                        width: 35, // Adjust width for better appearance
-                        height: 35, // Ensure height matches width
-                        textAlign: "center",
-                        borderRadius: "50%", // Optional: Make it circular
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="25" // Adjusted for better visibility
-                        height="25"
-                        fill="currentColor"
-                        className="bi bi-bookmark-fill"
-                        viewBox="0 0 16 16"
-                        color={bookmarkStatus[note._id] ? "black" : "white"}
-                      >
-                        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
-                      </svg>
-                    </Button>
+                    
                     <Button size="sm" href={`/note/${note._id}`}>
                       Edit
                     </Button>

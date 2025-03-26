@@ -2,8 +2,8 @@
   min-height: 93vh;
   display: flex;
   align-items: center;
-  background-image: url(./background.jpg);
   background-position: center;
+  background-color: rgb(114, 25, 183);
   background-size: cover;
   transition: filter 0.3s ease;
 }
@@ -22,7 +22,7 @@
   font-weight: bold;
   font-size: 2.5rem;
   font-style: italic;
-  color: #ffffff;
+  color: #000000;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9); /* Same shadow for both */
   margin: 10px 0; /* Adds space between the intro1 and intro2 */
 }

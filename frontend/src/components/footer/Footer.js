@@ -22,7 +22,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className="text-center-py-3">
-            &copy; {new Date().getFullYear()} Note Codex Project. All rights
+            &copy; {new Date().getFullYear()} Summary Lock. All rights
             reserved.
           </Col>
         </Row>

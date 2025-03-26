@@ -24,7 +24,7 @@ const LandingPage = () => {
         <Container>
           <Row className="justify-content-center text-center">
             <div className="intro-text">
-              <h1 className="intro1">Note Codex</h1>
+              <h1 className="intro1">Summary Lock</h1>
               <h2 className="intro2">All notes in one place</h2>
             </div>
           </Row>
