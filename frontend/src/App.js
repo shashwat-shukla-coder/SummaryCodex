@@ -7,6 +7,7 @@ import CreateNote from "./screens/NewNote/CreateNote";
 import SingleNote from "./screens/NewNote/SingleNote";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
+import SummaryNote from "./screens/NewNote/SummaryNote";
 
 // classname instead of class as in html
 // fragmentation
@@ -22,6 +23,7 @@ function App() {
             <Route path="/mynotes" element={<MyNotes search={search} />} />
             <Route path="/createnote" element={<CreateNote />} />
             <Route path="/note/:id" element={<SingleNote />} />
+            <Route path="/notes/:id" element={<SummaryNote />} />
           </Routes>
         </main>
         <Footer />

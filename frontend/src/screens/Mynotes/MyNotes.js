@@ -97,8 +97,6 @@ const MyNotes = ({ search }) => {
         </Button>
       </Link>
 
-      
-
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {errorDelete && (
         <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
@@ -161,7 +159,9 @@ const MyNotes = ({ search }) => {
                       padding: "1px",
                     }}
                   >
-                    
+                    <Button size="sm" href={`/notes/${note._id}`}>
+                      Summary
+                    </Button>
                     <Button size="sm" href={`/note/${note._id}`}>
                       Edit
                     </Button>
