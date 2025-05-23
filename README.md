@@ -1,19 +1,16 @@
-# NoteCodex  **Deployed at**: [https://notecodex.onrender.com/](https://notecodex.onrender.com/)
-**A Feature-Rich, Secure Note-Taking and Storage Application**  
-
-Welcome to **NoteCodex**! This application is designed to help users create, manage, and securely store notes with ease. Built with the MERN (MongoDB, Express, React, Node.js) stack, it provides a seamless and responsive user experience for note-taking.  
-
----
 
 ## Features  
 
 - **CRUD Operations**: Create, Read, Update, and Delete notes effortlessly.  
 - **User Authentication**: Secure login and registration using **JWT-based authentication**.  
 - **Extra Features**: Bookmarks and Search features integration.  
-- **Markdown Compatibility**: Leverage **React Markdown** to format and render notes.  
 - **Responsive Design**: A clean, mobile-friendly UI built with **React-Bootstrap**.  
 - **State Management**: Centralized state management with **Redux** for better performance.  
 - **Error Handling**: Robust middleware for authorization, role-based access, and error handling.
+- **Text to Speech**:Convert notes into audio using built-in text-to-speech functionality.
+- **abstractive summary**:Summarize long notes into concise content using T5-based abstractive summarization.
+- **extractive summary**:Highlight key sentences from notes with sentence-transformer-based extractive summarization.
+- **downladable notes**: Export and download notes as text files for offline access.
 
 ---
 
