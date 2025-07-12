@@ -26,9 +26,13 @@ const MyNotes = ({ search }) => {
     error: errorDelete,
     success: successDelete,
   } = noteDelete;
+
   const [showBookmark, setShowBookmark] = useState(false);
-  const [bookmarkStatus, setBookmarkStatus] = useState({}); // Track bookmark status for each note
-  // Initialize bookmarkStatus state from notes
+  const [bookmarkStatus, setBookmarkStatus] = useState({});
+  const [isPaused, setIsPaused] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentUtterance, setCurrentUtterance] = useState(null);
+
   useEffect(() => {
     if (notes) {
       const initialStatus = notes.reduce((acc, note) => {
@@ -39,39 +43,20 @@ const MyNotes = ({ search }) => {
     }
   }, [notes]);
 
-  // Function to handle deleting notes
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
     }
   };
 
-  // Toggle bookmark for each note
-  const toggleBookmark = async (id) => {
-    const token = JSON.parse(userInfo).token;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    try {
-      const { data } = await axios.put(`/notes/bookmark/${id}/`, {}, config);
-      if (data) {
-        // Update bookmark status locally
-        setBookmarkStatus((prev) => ({
-          ...prev,
-          [id]: data.bookmark,
-        }));
-      } else {
-        console.error("No data in response");
-      }
-    } catch (error) {
-      console.error(
-        "Error updating bookmark:",
-        error.response?.data?.message || error.message
-      );
-    }
+  const downloadNote = (title, content) => {
+    const element = document.createElement("a");
+    const file = new Blob([content], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = `${title}.txt`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   };
 
   useEffect(() => {
@@ -89,6 +74,43 @@ const MyNotes = ({ search }) => {
     setShowBookmark,
   ]);
 
+  const speakText = (text) => {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    setCurrentUtterance(utterance);
+    setIsSpeaking(true);
+    setIsPaused(false);
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      setIsPaused(false);
+    };
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const togglePause = () => {
+    if (window.speechSynthesis.speaking) {
+      if (isPaused) {
+        window.speechSynthesis.resume();
+        setIsPaused(false);
+      } else {
+        window.speechSynthesis.pause();
+        setIsPaused(true);
+      }
+    }
+  };
+
+  const restartSpeech = () => {
+    if (currentUtterance) {
+      window.speechSynthesis.cancel();
+      const newUtterance = new SpeechSynthesisUtterance(currentUtterance.text);
+      newUtterance.lang = "en-US";
+      setCurrentUtterance(newUtterance);
+      setIsSpeaking(false);
+      setIsPaused(false);
+    }
+  };
+
   return (
     <MainScreen title={`${newname} Notes...`}>
       <Link to="/createnote">
@@ -103,7 +125,7 @@ const MyNotes = ({ search }) => {
       )}
       {loadingDelete && <Loading />}
       {loading && <Loading />}
-      {/* function chaining in js is crazy lol */}
+
       {notes &&
         notes
           .filter((note) =>
@@ -132,7 +154,7 @@ const MyNotes = ({ search }) => {
                       cursor: "pointer",
                       alignSelf: "center",
                       fontSize: 18,
-                      maxWidth: "70%", // Limit title width
+                      maxWidth: "70%",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -154,32 +176,92 @@ const MyNotes = ({ search }) => {
                   <div
                     style={{
                       display: "flex",
-                      gap: "3px",
-                      marginTop: "5px",
-                      padding: "1px",
+                      flexDirection: "column",
+                      gap: "5px",
+                      justifyContent: "space-around",
                     }}
                   >
-                    <Button size="sm" href={`/notes/${note._id}`}>
-                      Summary
-                    </Button>
-                    <Button size="sm" href={`/note/${note._id}`}>
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => deleteHandler(note._id)}
+                    {/* Top Row:*/}
+                    <div
+                      style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}
                     >
-                      Delete
-                    </Button>
+                      <Button size="sm" href={`/notes/${note._id}`}>
+                        Summary
+                      </Button>
+                      <Button size="sm" href={`/note/${note._id}`}>
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => deleteHandler(note._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+
+                    {/* Bottom Row*/}
+                    <div
+                      style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}
+                    >
+                      {/* speak (Txt to Speech) */}
+                      <Button
+                        variant="light"
+                        size="sm"
+                        onClick={() => speakText(note.content)}
+                      >
+                        <i className="bi bi-megaphone"></i>
+                      </Button>
+                      {/* pause/resume */}
+                      <Button
+                        variant="light"
+                        size="sm"
+                        onClick={togglePause}
+                        disabled={!isSpeaking}
+                      >
+                        {isPaused ? (
+                          <i className="bi bi-play-fill"></i>
+                        ) : (
+                          <i className="bi bi-pause-circle-fill"></i>
+                        )}
+                      </Button>
+                      {/* Restart button */}
+                      <Button
+                        variant="light"
+                        size="sm"
+                        onClick={() => {
+                          if (currentUtterance) {
+                            window.speechSynthesis.cancel();
+                            const newUtterance = new SpeechSynthesisUtterance(
+                              currentUtterance.text
+                            );
+                            newUtterance.lang = "en-US";
+                            setCurrentUtterance(newUtterance);
+                            setIsSpeaking(false);
+                            setIsPaused(false);
+                          }
+                        }}
+                        disabled={!currentUtterance}
+                      >
+                        <i className="bi bi-arrow-counterclockwise"></i>
+                      </Button>
+                     { /*download button*/}
+                      <Button
+                        variant="dark"
+                        size="sm"
+                        onClick={() => downloadNote(note.title, note.content)}
+                      >
+                        <i className="bi bi-download " ></i>
+                      </Button>
+                    </div>
                   </div>
                 </Card.Header>
                 <Accordion.Body>
                   <Card.Body
                     className="blockquote"
                     style={{
-                      maxHeight: "350px", // Set the maximum height of the content
-                      overflowY: "auto", // Enable vertical scrolling
+                      maxHeight: "350px",
+                      overflowY: "auto",
                     }}
                   >
                     <h4>
