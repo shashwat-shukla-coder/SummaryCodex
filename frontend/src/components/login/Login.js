@@ -7,7 +7,7 @@ import ErrorMessage from "../ErrorMessage";
 import { login } from "../../actions/userActions";
 import "./login.css";
 
-const Login = ({ onSignUpClick }) => {
+const Login = ({ onSignUpClick, activeModal }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +22,7 @@ const Login = ({ onSignUpClick }) => {
   const userInfo = localStorage.getItem("userInfo");
   useEffect(() => {
     if (userInfo) {
+      activeModal(null)
       navigate("/mynotes");
     }
   }, [userInfo, navigate]);
@@ -30,6 +31,9 @@ const Login = ({ onSignUpClick }) => {
     <form className="login-form" onSubmit={handleSubmit}>
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading />}
+      <div className="closebox">
+        <span onClick={activeModal}>close</span>
+      </div>
       <label>
         Username:
         <input
