@@ -4,7 +4,7 @@ import "./Register.css";
 import Loading from "../Loadingcomp/Loading";
 import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../actions/userActions";
+import { login, register } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 
 const Register = ({ activeModal }) => {
@@ -12,7 +12,7 @@ const Register = ({ activeModal }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error } = userRegister;
@@ -25,6 +25,10 @@ const Register = ({ activeModal }) => {
     }
     try {
       dispatch(register(username, password, email));
+      alert("Registration successful");
+      dispatch(login(username, password));
+      activeModal(null); // Close the modal after registration
+      navigate("/mynotes");
     } catch (error) {
       console.log("unable to sign in due to " + error);
     }
@@ -35,6 +39,9 @@ const Register = ({ activeModal }) => {
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       <div>
         {loading && <Loading />}
+        <div className="closebox">
+        <span onClick={activeModal}>close</span>
+        </div>
         <label>
           Username:
           <input
