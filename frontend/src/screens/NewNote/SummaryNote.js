@@ -101,7 +101,7 @@ const SummaryNote = () => {
       title="Summarize"
       style={{
         fontWeight: "bold",
-        backgroundColor: "#1e1e2f", // Cooler dark base
+        backgroundColor: "#1e1e2f",
         color: "#e0e0e0",
         minHeight: "100vh",
         padding: "20px",
@@ -167,7 +167,7 @@ const SummaryNote = () => {
                 <Card.Header
                   style={{ backgroundColor: "#4b4b6b", fontWeight: "600" }}
                 >
-                  Note Preview
+                  summary Preview
                 </Card.Header>
                 <Card.Body>
                   <div
