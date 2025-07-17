@@ -1,33 +1,62 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  Container,
+  Form,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Row,
+} from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import "./Header.css"
+import Register from "../register/Register";
+import Login from "../login/Login";
+import "./Header.css";
 
 function Header({ setSearch }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const [activeModal, setActiveModal] = useState(null);
+
   const logoutHandler = () => {
     dispatch(logout());
     navigate("/");
   };
+
+  const ModalWrapper = ({ onClose, children }) => (
+    <div className="login-container">
+      <Button variant="secondary" onClick={onClose} className="close-button">
+        X
+      </Button>
+      {children}
+    </div>
+  );
+
+  const handleLoginClick = () => {
+    setActiveModal("login");
+  };
+
+  const handleRegisterClick = () => {
+    setActiveModal("register");
+  };
+
+  const handleClose = () => {
+    setActiveModal(null);
+  };
+
   useEffect(() => {}, [userInfo]);
+
   return (
     <Navbar
       expand="lg"
-      className=" bg-body-tertiary sticky-top"
+      className="bg-body-tertiary sticky-top"
       variant="dark"
-      style={{ backgroundColor: "indigo" }}
+      style={{ backgroundColor: "black" }}
     >
       <Container>
         <Navbar.Brand style={{ color: "yellow", fontWeight: "bold" }}>
@@ -53,11 +82,11 @@ function Header({ setSearch }) {
           </Nav>
 
           <Nav
-            className="ml-auto my-2 my-lg-0" // Aligns the Nav to the right
+            className="ml-auto my-2 my-lg-0 align-items-center"
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Navbar.Brand style={{ color: "white" }}>
+            <Navbar.Brand style={{ color: "white", marginRight: "20px" }}>
               <Link
                 to="/mynotes"
                 style={{ color: "inherit", textDecoration: "none" }}
@@ -65,13 +94,59 @@ function Header({ setSearch }) {
                 My Notes
               </Link>
             </Navbar.Brand>
+
+            {!userInfo && (
+              <div className="d-flex align-items-center">
+                <Button
+                  onClick={handleLoginClick}
+                  size="md"
+                  variant="outline-light"
+                  className="me-2"
+
+                >
+                  Sign In
+                </Button>
+                <Button
+                  onClick={handleRegisterClick}
+                  size="md"
+                  variant="outline-light"
+                  className="me-2"
+                >
+                  Sign Up
+                </Button>
+              </div>
+            )}
+
+            {/* Modals*/}
+            {activeModal === "login" && (
+              <div className="login-container">
+               
+                  <Login onSignUpClick={handleRegisterClick} activeModal={setActiveModal} />
+                
+              </div>
+            )}
+
+            {activeModal === "register" && (
+              <div className="login-container">              
+                  <Register activeModal={setActiveModal} />
+              </div>
+            )}
+
+            {/* Dropdown*/}
             <NavDropdown
               title={userInfo ? userInfo.username : "guest"}
               id="navbarScrollingDropdown"
             >
-              <NavDropdown.Item onClick={logoutHandler}>
-                Logout
-              </NavDropdown.Item>
+              {userInfo && (
+                <NavDropdown.Item onClick={logoutHandler}>
+                  Logout
+                </NavDropdown.Item>
+              )}
+              {!userInfo && (
+                <NavDropdown.Item onClick={logoutHandler}>
+                  Not Logged In
+                </NavDropdown.Item>
+              )}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
