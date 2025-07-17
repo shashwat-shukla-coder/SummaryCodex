@@ -4,7 +4,6 @@
   align-items: center;
   background-position: center;
   background-color: rgb(255, 255, 255);
-  background-image: url("./iiimmmggg.jpg");
 
   background-size: cover;
   transition: filter 0.3s ease;
@@ -13,85 +12,18 @@
 .intro-text {
   width: 100%;
   display: flex;
-  justify-content: center; /* Centers children horizontally */
-  align-items: center; /* Centers children vertically */
-  flex-direction: column; /* Aligns children vertically in a column */
-  text-align: center; /* Ensures text inside each child is centered */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
 
-.intro1,
-.intro2 {
+.intro1 {
   font-weight: bold;
   font-size: 2.5rem;
   font-style: italic;
   color: #000000;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9); /* Same shadow for both */
-  margin: 10px 0; /* Adds space between the intro1 and intro2 */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+  margin: 10px 0;
 }
 
-/* Additional specific styles for .intro2 */
-.intro2 {
-  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Different shadow */
-}
-
-.buttonContainer {
-  margin-top: 50px;
-  display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  align-items: center; /* Center the buttons vertically */
-  font-size: 1.5rem; /* Adjusts the font size of the buttons */
-  width: 100%;
-}
-
-.buttonContainer button {
-  margin-right: 25px; /* Adds spacing between buttons */
-  min-width: 100px; /* Standardizes button width */
-  min-height: 40px; /* Standardizes button height */
-  padding: 0 20px; /* Adds padding for consistency */
-  border-radius: 3.5px; /* Rounded corners for buttons */
-  background-color: #000000; /* Background color */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Slight shadow for buttons */
-  color: #ffffff; /* Text color for buttons */
-  text-align: center; /* Center the text inside the button */
-  width: 150px;
-}
-
-.buttonContainer button:hover {
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
-}
-
-.blur-background {
-  filter: blur(5px); /* Apply the blur effect */
-}
-
-.login-container {
-  border: 1px solid black;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 5px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1;
-  align-items: center;
-}
-.close-button {
-  align-self: flex-end;
-}
-@media (max-width: 600px) {
-  .login-container {
-    width: 70%; /* Wider form for better visibility */
-    padding: 10px;
-    min-height: 50%; /* Reduced height for compact appearance */
-  }
-
-  .login-container button {
-    padding: 10px; /* Bigger buttons for mobile */
-    font-size: 12px; /* Increased font size for better usability */
-  }
-}

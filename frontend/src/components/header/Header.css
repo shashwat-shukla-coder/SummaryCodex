@@ -6,3 +6,70 @@
   color: white;
   background-color: black;
 }
+.main {
+  padding: 0%;
+  height: 10px;
+  flex-wrap: wrap;
+  background-position: center;
+  background-size: cover;
+  transition: filter 0.3s ease;
+}
+
+.buttonContainer {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Center the buttons vertically */
+  font-size: 1.5rem; /* Adjusts the font size of the buttons */
+  width: 100%;
+}
+
+.buttonContainer button {
+  margin-right: 25px;
+  min-width: 50px;
+  min-height: 40px;
+  padding: 0 10px;
+  border-radius: 3.5px;
+  background-color: #000000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  text-align: center;
+  width: 150px;
+}
+
+.buttonContainer button:hover {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+}
+
+.blur-background {
+  filter: blur(5px); /* Apply the blur effect */
+}
+
+.login-container {
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1px;
+  background-color: #fff;
+  align-items: center;
+}
+.close-button {
+  align-self: flex-end;
+}
+@media (max-width: 600px) {
+  .login-container {
+    width: 60%; /* Wider form for better visibility */
+    padding: 10px;
+  }
+
+  .login-container button {
+    padding: 5px; /* Bigger buttons for mobile */
+    font-size: 12px; /* Increased font size for better usability */
+  }
+}
