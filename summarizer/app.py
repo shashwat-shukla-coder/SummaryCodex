@@ -1,13 +1,9 @@
 from flask import Flask, request, jsonify
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
-from sentence_transformers import SentenceTransformer
+from flask_cors import CORS
+import os, re, nltk
+from nltk.tokenize import sent_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-import nltk
-from nltk.tokenize import sent_tokenize
-from nltk.corpus import stopwords
-from flask_cors import CORS
-import re
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -15,22 +11,30 @@ nltk.download('stopwords')
 app = Flask(__name__)
 CORS(app)
 
-# Load T5 model for abstractive summarization
+# Load models lazily to reduce memory usage
+abstractive_summarizer = None
+embedding_model = None
+
 def load_abstractive_model():
-    tokenizer = AutoTokenizer.from_pretrained("t5-base")
-    model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
-    summarizer_pipeline = pipeline(
-        task="summarization",
-        model=model,
-        tokenizer=tokenizer,
-        framework="pt"
-    )
-    return summarizer_pipeline
+    global abstractive_summarizer
+    if abstractive_summarizer is None:
+        from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
+        tokenizer = AutoTokenizer.from_pretrained("t5-small")
+        model = AutoModelForSeq2SeqLM.from_pretrained("t5-small")
+        abstractive_summarizer = pipeline(
+            task="summarization",
+            model=model,
+            tokenizer=tokenizer,
+            framework="pt"
+        )
+    return abstractive_summarizer
 
-abstractive_summarizer = load_abstractive_model()
-
-# Load sentence transformer for extractive summarization
-embedding_model = SentenceTransformer('all-mpnet-base-v2')
+def load_embedding_model():
+    global embedding_model
+    if embedding_model is None:
+        from sentence_transformers import SentenceTransformer
+        embedding_model = SentenceTransformer('all-mpnet-base-v2')
+    return embedding_model
 
 def preprocess_text(text):
     return sent_tokenize(text)
@@ -44,7 +48,8 @@ def generate_summary_embeddings(sentences, embeddings, num_sentences=3):
 
 def fun_embeddings(text):
     sentences = preprocess_text(text)
-    embeddings = embedding_model.encode(sentences, convert_to_numpy=True, show_progress_bar=False)
+    model = load_embedding_model()
+    embeddings = model.encode(sentences, convert_to_numpy=True, show_progress_bar=False)
     return generate_summary_embeddings(sentences, embeddings)
 
 def chunk_text(text, max_chunk_length=500):
@@ -60,15 +65,15 @@ def chunk_text(text, max_chunk_length=500):
 
     if current_chunk:
         chunks.append(current_chunk.strip())
-
     return chunks
 
 def perform_abstractive_summarization(text, max_length=150, min_length=30):
+    summarizer = load_abstractive_model()
     chunks = chunk_text(text)
     summaries = []
 
     for chunk in chunks:
-        result = abstractive_summarizer(
+        result = summarizer(
             chunk,
             max_length=max_length,
             min_length=min_length,
@@ -85,18 +90,19 @@ def clean_summary(summary):
 def extractive():
     data = request.get_json()
     text = data.get('text', '')
-
     if not text:
         return jsonify({'error': 'No text provided.'}), 400
 
-    summary = fun_embeddings(text)
-    return jsonify({'summary': summary})
+    try:
+        summary = fun_embeddings(text)
+        return jsonify({'summary': summary})
+    except Exception as e:
+        return jsonify({'error': 'Extractive summarization failed', 'details': str(e)}), 500
 
 @app.route('/abstractive', methods=['POST'])
 def abstractive():
     data = request.get_json()
     text = data.get('text', '')
-
     if not text:
         return jsonify({'error': 'No text provided.'}), 400
 
@@ -105,7 +111,7 @@ def abstractive():
         cleaned = clean_summary(raw_summary)
         return jsonify({'summary': cleaned})
     except Exception as e:
-        return jsonify({'error': 'Failed to summarize the text.', 'details': str(e)}), 500
+        return jsonify({'error': 'Abstractive summarization failed', 'details': str(e)}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
