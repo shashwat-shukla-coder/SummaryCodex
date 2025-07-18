@@ -1,0 +1,9 @@
+flask
+flask-cors
+transformers
+torch
+sentence-transformers
+scikit-learn
+nltk
+numpy
+gunicorn
