@@ -5,8 +5,11 @@ from nltk.tokenize import sent_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-nltk.download('punkt')
-nltk.download('stopwords')
+import nltk
+nltk.data.path.append('./nltk_data')
+nltk.download('punkt', download_dir='./nltk_data')
+nltk.download('stopwords', download_dir='./nltk_data')
+
 
 app = Flask(__name__)
 CORS(app)
