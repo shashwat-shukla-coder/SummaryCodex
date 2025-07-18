@@ -17,17 +17,23 @@ ConnectDB();
 app.use("/users", userRoutes); // via this i can hit user routes
 app.use("/notes", noteRoutes); // via this i can hit note routes
 //---------deployment
-__dirname = path.resolve();
-if (process.env.NODE_ENV == "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/build")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+    res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
     res.send("API is running...");
   });
 }
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
 
 //------------
 app.use(notFound);
