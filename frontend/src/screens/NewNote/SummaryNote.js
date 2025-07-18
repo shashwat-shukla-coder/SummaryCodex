@@ -68,7 +68,7 @@ const SummaryNote = () => {
   const AbstractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
-      const response = await axios.post("http://localhost:7000/abstractive", {
+      const response = await axios.post("https://summarizer-api-qydn.onrender.com/abstractive", {
         text: content,
       });
       const summary = response.data.summary;
@@ -84,7 +84,7 @@ const SummaryNote = () => {
   const ExtractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
-      const response = await axios.post("http://localhost:7000/extractive", {
+      const response = await axios.post("https://summarizer-api-qydn.onrender.com/extractive", {
         text: content,
       });
       const summary = response.data.summary;
