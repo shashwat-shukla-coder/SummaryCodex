@@ -10,11 +10,12 @@ services:
     autoDeploy: true
 
   - type: web
-    name: notecodex-backend
+    name: node-backend
     env: node
     plan: free
-    region: oregon
     rootDir: backend
-    buildCommand: npm install
+    buildCommand: |
+      cd ../frontend && npm install && npm run build
+      cd ../backend && npm install
     startCommand: node server.js
     autoDeploy: true
