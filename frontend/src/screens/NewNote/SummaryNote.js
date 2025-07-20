@@ -70,20 +70,11 @@ const SummaryNote = () => {
   const AbstractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-          "Content-Type": "application/json",
-        },
-      };
-
-      const { data } = await axios.post(
-        "/notes/summarize/abstractive",
-        { content },
-        config
-      );
-      setSummarizedContent(data.summary);
+      const response = await axios.post("http://localhost:7000/abstractive", {
+        text: content,
+      });
+      const summary = response.data.summary;
+      setSummarizedContent(summary);
     } catch (error) {
       console.error("Abstractive summarization failed:", error);
     } finally {

@@ -1,4 +1,5 @@
 const Note = require("../models/note");
+const axios = require("axios");
 //get user notes
 const getAllNotes = async (req, res) => {
   try {
@@ -112,6 +113,45 @@ const Updatebookmark = async function (req, res) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+const summarizeAbstractive = async (req, res) => {
+  const { content } = req.body;
+  if (!content) {
+    return res.status(400).json({ message: "Content is required" });
+  }
+  try {
+    const response = await axios.post("http://localhost:7000/abstractive", {
+      text: content,
+    });
+    res.json({ summary: response.data.summary });
+  } catch (error) {
+    console.error("Summarization Error:", error.message);
+    res
+      .status(500)
+      .json({ message: "Error in summarization", error: error.message });
+  }
+};
+
+const summarizeExtractive = async (req, res) => {
+  const { content } = req.body;
+
+  if (!content) {
+    return res.status(400).json({ message: "Content is required" });
+  }
+
+  try {
+    const response = await axios.post("http://localhost:7000/extractive", {
+      text: content,
+    });
+
+    res.json({ summary: response.data.summary });
+  } catch (error) {
+    console.error("Extractive summarization error:", error.message);
+    res.status(500).json({
+      message: "Extractive summarization failed",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   getAllNotes,
@@ -120,4 +160,6 @@ module.exports = {
   DeleteNote,
   UpdateNote,
   Updatebookmark,
+  summarizeAbstractive,
+  summarizeExtractive,
 };
