@@ -40,6 +40,7 @@ const SummaryNote = () => {
             Authorization: `Bearer ${userInfo.token}`,
           },
         };
+        console.log(userInfo.token);
         const { data } = await axios.get(`/notes/${id}`, config);
         setTitle(data.title);
         setContent(data.content);
@@ -65,32 +66,51 @@ const SummaryNote = () => {
   };
   // this is the part where i insert the summarize logic
   //abstractive summary handler
+  // Abstractive summary handler
   const AbstractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
-      const response = await axios.post("http://localhost:7000/abstractive", {
-        text: content,
-      });
-      const summary = response.data.summary;
-      setSummarizedContent(summary);
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        "/notes/summarize/abstractive",
+        { content },
+        config
+      );
+      setSummarizedContent(data.summary);
     } catch (error) {
-      console.error("Summarization failed:", error);
+      console.error("Abstractive summarization failed:", error);
     } finally {
       setSummarizingLoading(false);
     }
   };
 
-  //extractive summary handler
+  // Extractive summary handler
   const ExtractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
-      const response = await axios.post("http://localhost:7000/extractive", {
-        text: content,
-      });
-      const summary = response.data.summary;
-      setSummarizedContent(summary);
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        "/notes/summarize/extractive",
+        { content },
+        config
+      );
+      setSummarizedContent(data.summary);
     } catch (error) {
-      console.error("Summarization failed:", error);
+      console.error("Extractive summarization failed:", error);
     } finally {
       setSummarizingLoading(false);
     }
