@@ -185,12 +185,17 @@ const MyNotes = ({ search }) => {
                     <div
                       style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}
                     >
-                      <Button size="sm" href={`/notes/${note._id}`}>
-                        Summary
-                      </Button>
-                      <Button size="sm" href={`/note/${note._id}`}>
-                        Edit
-                      </Button>
+                      <Link to={`/note/summary/${note._id}`}>
+                        <Button size="sm">Summary</Button>
+                      </Link>
+
+                      <Link
+                        to={`/note/${note._id}`}
+                        style={{ color: "inherit" }}
+                      >
+                        <Button>Edit</Button>
+                      </Link>
+
                       <Button
                         variant="danger"
                         size="sm"
@@ -245,13 +250,13 @@ const MyNotes = ({ search }) => {
                       >
                         <i className="bi bi-arrow-counterclockwise"></i>
                       </Button>
-                     { /*download button*/}
+                      {/*download button*/}
                       <Button
                         variant="dark"
                         size="sm"
                         onClick={() => downloadNote(note.title, note.content)}
                       >
-                        <i className="bi bi-download " ></i>
+                        <i className="bi bi-download "></i>
                       </Button>
                     </div>
                   </div>
