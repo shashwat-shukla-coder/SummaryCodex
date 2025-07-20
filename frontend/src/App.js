@@ -23,7 +23,7 @@ function App() {
             <Route path="/mynotes" element={<MyNotes search={search} />} />
             <Route path="/createnote" element={<CreateNote />} />
             <Route path="/note/:id" element={<SingleNote />} />
-            <Route path="/notes/:id" element={<SummaryNote />} />
+            <Route path="/note/summary/:id" element={<SummaryNote />} />
           </Routes>
         </main>
         <Footer />
