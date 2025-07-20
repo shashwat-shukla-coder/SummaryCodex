@@ -88,7 +88,7 @@ def perform_abstractive_summarization(text, max_length=150, min_length=30):
 
 def clean_summary(summary):
     return re.sub(r'[^\x20-\x7E]+', '', summary)
-
+##API Routes
 @app.route('/extractive', methods=['POST'])
 def extractive():
     data = request.get_json()
@@ -117,5 +117,5 @@ def abstractive():
         return jsonify({'error': 'Abstractive summarization failed', 'details': str(e)}), 500
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 7000))
     app.run(host="0.0.0.0", port=port)
