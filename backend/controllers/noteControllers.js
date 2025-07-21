@@ -141,9 +141,8 @@ const summarizeExtractive = async (req, res) => {
   try {
     const response = await axios.post(
       "https://summarizer-api-qydn.onrender.com/extractive",
-      {
-        text: content,
-      }
+      { text: content },
+      { timeout: 30000 } // 30 seconds timeout
     );
 
     res.json({ summary: response.data.summary });
@@ -163,6 +162,6 @@ module.exports = {
   DeleteNote,
   UpdateNote,
   Updatebookmark,
-  summarizeAbstractive,
+  // summarizeAbstractive,
   summarizeExtractive,
 };
