@@ -113,23 +113,23 @@ const Updatebookmark = async function (req, res) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-const summarizeAbstractive = async (req, res) => {
-  const { content } = req.body;
-  if (!content) {
-    return res.status(400).json({ message: "Content is required" });
-  }
-  try {
-    const response = await axios.post("http://127.0.0.1:7000/abstractive", {
-      text: content,
-    });
-    res.json({ summary: response.data.summary });
-  } catch (error) {
-    console.error("Summarization Error:", error.message);
-    res
-      .status(500)
-      .json({ message: "Error in summarization", error: error.message });
-  }
-};
+// const summarizeAbstractive = async (req, res) => {
+//   const { content } = req.body;
+//   if (!content) {
+//     return res.status(400).json({ message: "Content is required" });
+//   }
+//   try {
+//     const response = await axios.post("http://127.0.0.1:7000/abstractive", {
+//       text: content,
+//     });
+//     res.json({ summary: response.data.summary });
+//   } catch (error) {
+//     console.error("Summarization Error:", error.message);
+//     res
+//       .status(500)
+//       .json({ message: "Error in summarization", error: error.message });
+//   }
+// };
 
 const summarizeExtractive = async (req, res) => {
   const { content } = req.body;

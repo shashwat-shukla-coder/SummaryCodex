@@ -67,22 +67,22 @@ const SummaryNote = () => {
   // this is the part where i insert the summarize logic
   //abstractive summary handler
   // Abstractive summary handler
-  const AbstractivesummarizeHandler = async () => {
-    setSummarizingLoading(true);
-    try {
-      const response = await axios.post("http://localhost:7000/abstractive", {
-        text: content,
-      });
-      const summary = response.data.summary;
-      setSummarizedContent(summary);
-    } catch (error) {
-      console.error("Abstractive summarization failed:", error);
-    } finally {
-      setSummarizingLoading(false);
-    }
-  };
+  // const AbstractivesummarizeHandler = async () => {
+  //   setSummarizingLoading(true);
+  //   try {
+  //     const response = await axios.post("http://localhost:7000/abstractive", {
+  //       text: content,
+  //     });
+  //     const summary = response.data.summary;
+  //     setSummarizedContent(summary);
+  //   } catch (error) {
+  //     console.error("Abstractive summarization failed:", error);
+  //   } finally {
+  //     setSummarizingLoading(false);
+  //   }
+  // };
 
-  // Extractive summary handler
+  Extractive summary handler
   const ExtractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
@@ -224,13 +224,13 @@ const SummaryNote = () => {
               >
                 Update Note
               </Button>
-              <Button
+              {/* <Button
                 variant="secondary"
                 style={{ backgroundColor: "#718096", border: "none" }}
                 onClick={AbstractivesummarizeHandler}
               >
                 Abstractive Summary
-              </Button>
+              </Button> */}
               <Button
                 variant="secondary"
                 style={{ backgroundColor: "#63b3ed", border: "none" }}
