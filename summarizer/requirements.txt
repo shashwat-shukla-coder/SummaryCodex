@@ -2,7 +2,7 @@ Flask
 transformers
 scikit-learn
 numpy
-torch==2.5.1
+torch==2.6.0
 requests
 flask-cors
 gunicorn
