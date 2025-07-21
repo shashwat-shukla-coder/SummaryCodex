@@ -3,7 +3,8 @@ flask-cors
 gunicorn
 
 transformers==4.41.1
-torch==2.2.2
+torch==2.7.1  # Supported on Render
+
 
 scikit-learn
 sentence-transformers
