@@ -6,3 +6,4 @@ nltk
 gunicorn
 requests
 flask-cors
+spacy==3.7.2
