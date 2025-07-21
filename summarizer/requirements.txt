@@ -6,6 +6,6 @@ nltk
 gunicorn
 requests
 flask-cors
-spacy==3.7.2
+spacy==3.5.4 
 scikit-learn==1.4.2
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.0/en_core_web_sm-3.7.0-py3-none-any.whl
