@@ -2,21 +2,22 @@ from flask import Flask, request, jsonify
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import nltk
 import numpy as np
 import torch
 import os
+import spacy
 
-# Setup
+nlp = spacy.load("en_core_web_sm")  # Load once globally
+
 app = Flask(__name__)
-nltk.data.path.append(os.path.join(os.getcwd(), "nltk_data"))
-nltk.download('punkt', download_dir="nltk_data")
-nltk.download('stopwords', download_dir="nltk_data")
-stopwords = set(nltk.corpus.stopwords.words('english'))
 
-# Abstractive model (T5-small)
+# Load abstractive model once
 abstractive_tokenizer = AutoTokenizer.from_pretrained("t5-small")
 abstractive_model = AutoModelForSeq2SeqLM.from_pretrained("t5-small")
+
+def split_sentences(text):
+    doc = nlp(text)
+    return [sent.text.strip() for sent in doc.sents if sent.text.strip()]
 
 @app.route("/")
 def home():
@@ -50,23 +51,26 @@ def extractive_summary():
     if not text:
         return jsonify({"error": "No text provided"}), 400
 
-    # Sentence tokenization
-    sentences = nltk.sent_tokenize(text)
+    # Tokenize sentences
+    sentences = split_sentences(text)
     if len(sentences) <= 2:
-        return jsonify({"summary": text})  # too short
+        return jsonify({"summary": text})
 
     # TF-IDF vectorization
-    vectorizer = TfidfVectorizer(stop_words=stopwords)
+    vectorizer = TfidfVectorizer(stop_words='english')
     X = vectorizer.fit_transform(sentences)
 
     # Similarity matrix
     sim_matrix = cosine_similarity(X)
 
-    # Sentence scores: sum of similarity scores
-    scores = sim_matrix.sum(axis=1)
-    ranked_sentences = [sent for _, sent in sorted(zip(scores, sentences), reverse=True)]
+    # Combined sentence scores
+    tfidf_scores = X.sum(axis=1).A1
+    sim_scores = sim_matrix.sum(axis=1)
+    combined_scores = tfidf_scores + sim_scores
 
-    # Top 3 sentences
+    ranked_sentences = [sent for _, sent in sorted(zip(combined_scores, sentences), reverse=True)]
+
+    # Top N sentences (1/3rd of original)
     top_n = max(1, len(sentences) // 3)
     summary = " ".join(ranked_sentences[:top_n])
     return jsonify({"summary": summary})
