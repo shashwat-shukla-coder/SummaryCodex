@@ -119,7 +119,7 @@ const summarizeAbstractive = async (req, res) => {
     return res.status(400).json({ message: "Content is required" });
   }
   try {
-    const response = await axios.post("https://summarizer-api-qydn.onrender.com/abstractive", {
+    const response = await axios.post("http://127.0.0.1:7000/abstractive", {
       text: content,
     });
     res.json({ summary: response.data.summary });
@@ -139,9 +139,12 @@ const summarizeExtractive = async (req, res) => {
   }
 
   try {
-    const response = await axios.post("https://summarizer-api-qydn.onrender.com/extractive", {
-      text: content,
-    });
+    const response = await axios.post(
+      "https://summarizer-api-qydn.onrender.com/extractive",
+      {
+        text: content,
+      }
+    );
 
     res.json({ summary: response.data.summary });
   } catch (error) {
