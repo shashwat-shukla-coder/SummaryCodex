@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from transformers import pipeline
+# from transformers import pipeline  # Commented: No longer using abstractive summarization
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
@@ -8,8 +8,8 @@ import re
 
 app = Flask(__name__)
 
-# Load summarization pipeline once (DistilBART model)
-abstractive_summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+# Commented: Remove HuggingFace model loading
+# abstractive_summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
 
 def split_sentences(text):
     sentences = re.split(r'(?<=[.!?]) +', text.strip())
@@ -19,21 +19,22 @@ def split_sentences(text):
 def home():
     return jsonify({"message": "Summarization API is running."})
 
-@app.route("/abstractive", methods=["POST"])
-def abstractive_summary():
-    data = request.get_json()
-    text = data.get("text", "")
-    if not text:
-        return jsonify({"error": "No text provided"}), 400
-
-    # BART model input limit is around 1024 tokens (≈ 1024*4 characters)
-    max_chunk_size = 4000  # for safety
-    if len(text) > max_chunk_size:
-        text = text[:max_chunk_size]
-
-    summary_output = abstractive_summarizer(text, max_length=300, min_length=60, do_sample=False)
-    summary = summary_output[0]["summary_text"]
-    return jsonify({"summary": summary})
+# Commented out abstractive route completely
+# @app.route("/abstractive", methods=["POST"])
+# def abstractive_summary():
+#     data = request.get_json()
+#     text = data.get("text", "")
+#     if not text:
+#         return jsonify({"error": "No text provided"}), 400
+#
+#     # BART model input limit is around 1024 tokens (≈ 1024*4 characters)
+#     max_chunk_size = 4000  # for safety
+#     if len(text) > max_chunk_size:
+#         text = text[:max_chunk_size]
+#
+#     summary_output = abstractive_summarizer(text, max_length=300, min_length=60, do_sample=False)
+#     summary = summary_output[0]["summary_text"]
+#     return jsonify({"summary": summary})
 
 @app.route("/extractive", methods=["POST"])
 def extractive_summary():
