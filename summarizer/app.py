@@ -29,7 +29,6 @@ def abstractive_summary():
     text = data.get("text", "")
     if not text:
         return jsonify({"error": "No text provided"}), 400
-
     input_text = "summarize: " + text
     input_ids = abstractive_tokenizer.encode(input_text, return_tensors="pt", truncation=True)
 
