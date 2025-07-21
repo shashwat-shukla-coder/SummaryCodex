@@ -5,9 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import torch
 import os
-import spacy
-
-nlp = spacy.load("en_core_web_sm")  # Load once globally
+import re
 
 app = Flask(__name__)
 
@@ -16,8 +14,8 @@ abstractive_tokenizer = AutoTokenizer.from_pretrained("t5-small")
 abstractive_model = AutoModelForSeq2SeqLM.from_pretrained("t5-small")
 
 def split_sentences(text):
-    doc = nlp(text)
-    return [sent.text.strip() for sent in doc.sents if sent.text.strip()]
+    sentences = re.split(r'(?<=[.!?]) +', text.strip())
+    return [sent.strip() for sent in sentences if sent.strip()]
 
 @app.route("/")
 def home():
@@ -35,8 +33,8 @@ def abstractive_summary():
 
     summary_ids = abstractive_model.generate(
         input_ids,
-        max_length=150,
-        min_length=40,
+        max_length=300,
+        min_length=60,
         length_penalty=2.0,
         num_beams=4,
         early_stopping=True
