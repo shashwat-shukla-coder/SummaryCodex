@@ -82,10 +82,6 @@ const SummaryNote = () => {
   //   }
   // };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ff62caf3763df17b306c0e229525395c011fe8b1
   const ExtractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
