@@ -1,16 +1,9 @@
-Flask==2.3.3
+Flask
+transformers
+scikit-learn
+numpy
+torch==2.5.1
+requests
 flask-cors
 gunicorn
 
-transformers==4.41.1
-torch==2.7.1  # Supported on Render
-
-
-scikit-learn
-sentence-transformers
-
-spacy==3.7.4
-blis==0.7.11
-
-# Direct install of the SpaCy model (language model)
-en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
