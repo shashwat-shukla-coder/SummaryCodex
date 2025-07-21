@@ -82,7 +82,6 @@ const SummaryNote = () => {
   //   }
   // };
 
-  Extractive summary handler
   const ExtractivesummarizeHandler = async () => {
     setSummarizingLoading(true);
     try {
