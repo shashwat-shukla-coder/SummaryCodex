@@ -89,18 +89,27 @@ def perform_abstractive_summarization(text, max_length=150, min_length=30):
 def clean_summary(summary):
     return re.sub(r'[^\x20-\x7E]+', '', summary)
 ##API Routes
+from flask import request, jsonify
+import traceback
+
 @app.route('/extractive', methods=['POST'])
 def extractive():
-    data = request.get_json()
-    text = data.get('text', '')
-    if not text:
-        return jsonify({'error': 'No text provided.'}), 400
-
     try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Missing JSON payload.'}), 400
+        text = data.get('text', '').strip()
+        if not text:
+            return jsonify({'error': 'No text provided.'}), 400
         summary = fun_embeddings(text)
         return jsonify({'summary': summary})
     except Exception as e:
-        return jsonify({'error': 'Extractive summarization failed', 'details': str(e)}), 500
+        traceback.print_exc()
+        return jsonify({
+            'error': 'Extractive summarization failed',
+            'details': str(e)
+        }), 500
+
 
 @app.route('/abstractive', methods=['POST'])
 def abstractive():
