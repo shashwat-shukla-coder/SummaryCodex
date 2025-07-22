@@ -127,11 +127,10 @@ export const deleteNoteAction = (id) => async (dispatch, getState) => {
 };
 
 export const updateNoteAction =
-  (id, title, content, category) => async (dispatch, getState) => {
+  (id, title, content, category, summarizedContent = null) =>
+  async (dispatch, getState) => {
     try {
-      dispatch({
-        type: NOTES_UPDATE_REQUEST,
-      });
+      dispatch({ type: NOTES_UPDATE_REQUEST });
 
       const {
         userLogin: { userInfo },
@@ -144,21 +143,23 @@ export const updateNoteAction =
         },
       };
 
+      // Use summarizedContent if provided, else fallback to content
+      const finalContent = summarizedContent || content;
+
       const { data } = await axios.put(
         `/notes/${id}`,
-        { title, content, category },
+        { title, content: finalContent, category },
         config
       );
+      console.log("Update Note Data:", data);
 
       dispatch({
         type: NOTES_UPDATE_SUCCESS,
         payload: data,
       });
     } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
+      const message = error.response?.data?.message || error.message;
+
       dispatch({
         type: NOTES_UPDATE_FAIL,
         payload: message,
