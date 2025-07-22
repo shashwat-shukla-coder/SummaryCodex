@@ -33,16 +33,6 @@ const MyNotes = ({ search }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [currentUtterance, setCurrentUtterance] = useState(null);
 
-  useEffect(() => {
-    if (notes) {
-      const initialStatus = notes.reduce((acc, note) => {
-        acc[note._id] = note.bookmark || false;
-        return acc;
-      }, {});
-      setBookmarkStatus(initialStatus);
-    }
-  }, [notes]);
-
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
@@ -110,6 +100,42 @@ const MyNotes = ({ search }) => {
       setIsPaused(false);
     }
   };
+  useEffect(() => {
+    if (notes) {
+      const initialStatus = notes.reduce((acc, note) => {
+        acc[note._id] = note.bookmark || false;
+        return acc;
+      }, {});
+      setBookmarkStatus(initialStatus);
+    }
+  }, [notes]);
+  const toggleBookmark = async (id) => {
+    const token = JSON.parse(userInfo).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    // Toggle bookmark status
+
+    try {
+      const { data } = await axios.put(`/notes/bookmark/${id}/`, {}, config);
+      if (data) {
+        // Update bookmark status locally
+        setBookmarkStatus((prev) => ({
+          ...prev,
+          [id]: data.bookmark,
+        }));
+      } else {
+        console.error("No data in response");
+      }
+    } catch (error) {
+      console.error(
+        "Error updating bookmark:",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
 
   return (
     <MainScreen title={`${newname} Notes...`}>
@@ -118,6 +144,14 @@ const MyNotes = ({ search }) => {
           Create new Note
         </Button>
       </Link>
+      <Button
+        style={{ marginLeft: 10, marginBottom: 6 }}
+        size="lg"
+        onClick={() => setShowBookmark(!showBookmark)}
+        variant={showBookmark ? "success" : "primary"}
+      >
+        {showBookmark ? "Show All Notes" : "Show Bookmarked Notes"}
+      </Button>
 
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {errorDelete && (
@@ -202,6 +236,34 @@ const MyNotes = ({ search }) => {
                         onClick={() => deleteHandler(note._id)}
                       >
                         Delete
+                      </Button>
+                      <Button
+                        onClick={() => toggleBookmark(note._id)}
+                        variant={
+                          bookmarkStatus[note._id] ? "warning" : "danger"
+                        } // Dynamic color
+                        style={{
+                          display: "flex", // Flexbox container
+                          justifyContent: "center", // Center horizontally
+                          alignItems: "center", // Center vertically
+                          padding: 10,
+                          width: 35, // Adjust width for better appearance
+                          height: 35, // Ensure height matches width
+                          textAlign: "center",
+                          borderRadius: "50%", // Optional: Make it circular
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="25" // Adjusted for better visibility
+                          height="25"
+                          fill="currentColor"
+                          className="bi bi-bookmark-fill"
+                          viewBox="0 0 16 16"
+                          color={bookmarkStatus[note._id] ? "black" : "white"}
+                        >
+                          <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+                        </svg>
                       </Button>
                     </div>
 
