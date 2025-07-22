@@ -57,7 +57,7 @@ const DeleteNote = async (req, res) => {
 
 //update a note by id and check if it belongs to the user
 const UpdateNote = async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, content, category, summarizedContent } = req.body;
 
   const note = await Note.findById(req.params.id);
 
@@ -68,7 +68,7 @@ const UpdateNote = async (req, res) => {
 
   if (note) {
     note.title = title;
-    note.content = content;
+    note.content = summarizedContent || content; // Prefer summarized if provided
     note.category = category;
 
     const updatedNote = await note.save();
@@ -78,6 +78,7 @@ const UpdateNote = async (req, res) => {
     throw new Error("Note not found");
   }
 };
+
 const Updatebookmark = async function (req, res) {
   try {
     // Find the note by ID

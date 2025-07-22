@@ -13,9 +13,9 @@ import axios from "axios";
 const SummaryNote = () => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
+  const [summarizedContent, setSummarizedContent] = useState();
   const [category, setCategory] = useState();
   const [date, setDate] = useState("");
-  const [summarizedContent, setSummarizedContent] = useState(null);
   const [summarizingLoading, setSummarizingLoading] = useState(false);
 
   const { id } = useParams();
@@ -57,7 +57,11 @@ const SummaryNote = () => {
 
   const updateHandler = async (e) => {
     e.preventDefault();
-    dispatch(updateNoteAction(id, title, content, category));
+    if (!title || !content || !category) {
+      alert("Please generate a summary before updating.");
+      return;
+    }
+    dispatch(updateNoteAction(id, title, content, category, summarizedContent));
     if (!title || !content || !category) return;
     await dispatch(listNotes());
 
