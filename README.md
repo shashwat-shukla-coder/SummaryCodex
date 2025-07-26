@@ -8,11 +8,11 @@ A full-stack note management application built with the MERN stack (MongoDB, Exp
 
 🧠 Summarization Engine:
 
-✨ Abstractive Summary: Condenses long notes using a T5-based deep learning model.
+- ✨ Abstractive Summary: Condenses long notes using a T5-based deep learning model.
 
-📌 Extractive Summary: Highlights key sentences with sentence-transformers.
+- 📌 Extractive Summary: Highlights key sentences with sentence-transformers.
 
-⏱️ Benefit: Significantly reduces reading time for lengthy notes.
+- ⏱️ Benefit: Significantly reduces reading time for lengthy notes.
 
 🗣️ Text-to-Speech: Listen to your notes through a built-in voice reader.
 
