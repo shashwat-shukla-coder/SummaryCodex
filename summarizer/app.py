@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-# from transformers import pipeline  # Commented: No longer using abstractive summarization
+# from transformers import pipeline  , No longer using abstractive summarization due to deployment memory issue of 512 ram
 import re
 from rank_bm25 import BM25Okapi
 import os
@@ -10,7 +10,7 @@ app = Flask(__name__)
 # Removed HuggingFace model loading
 # abstractive_summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
 
-#sentence splitter in place of nltk.tokenize to avoid extra dependency and memory usage
+#sentence splitter (regex) in place of nltk.tokenize to avoid extra dependency and memory usage
 def split_sentences(text):
     sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z0-9"])', text.strip())
     return [s.strip() for s in sentences if s.strip()]
@@ -24,7 +24,9 @@ def tokenize(text):
 def home():
     return jsonify({"message": "Summarization API is running."})
 
-# Commented out abstractive route completely
+# abstractive route removed completely due to render deployment memory issues 512mb
+# Uncomment the following code if you want to re-enable abstractive summarization
+# Note: Ensure your deployment environment has sufficient memory to handle this model.
 # @app.route("/abstractive", methods=["POST"])
 # def abstractive_summary():
 #     data = request.get_json()
@@ -54,8 +56,6 @@ def extractive_summary():
         return jsonify({"summary": text})
 
     tokenized_sentences = [tokenize(sent) for sent in sentences]
-
-    # Initialize BM25
     bm25 = BM25Okapi(tokenized_sentences)
 
     # Score each sentence against all other sentences
@@ -68,7 +68,7 @@ def extractive_summary():
 
     # Sort by highest average BM25 score
     ranked = sorted(avg_scores, reverse=True)
-    top_n = max(1, int(len(sentences) * 0.4))
+    top_n = max(1, int(len(sentences) * 0.4))#pick top 40% of sentences
     selected_indexes = sorted([idx for _, idx in ranked[:top_n]])
 
     summary = " ".join([sentences[i] for i in selected_indexes])
