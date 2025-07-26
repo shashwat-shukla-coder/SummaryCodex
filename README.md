@@ -50,9 +50,9 @@ A full-stack note management application built with the MERN stack (MongoDB, Exp
 
 ## Environment Variables
 Set up environment variables in a .env file (in both the main project and frontend if needed):
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   NODE_ENV=developemnt or production
+   - MONGO_URI=your_mongodb_connection_string
+   - JWT_SECRET=your_jwt_secret
+   - NODE_ENV=developemnt or production
 
 
 📈 Future Scope
