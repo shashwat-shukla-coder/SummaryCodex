@@ -6,4 +6,4 @@ numpy
 requests
 flask-cors
 gunicorn
-
+rank_bm25
