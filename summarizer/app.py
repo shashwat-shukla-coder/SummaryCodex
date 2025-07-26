@@ -1,19 +1,24 @@
 from flask import Flask, request, jsonify
 # from transformers import pipeline  # Commented: No longer using abstractive summarization
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
-import os
 import re
+from rank_bm25 import BM25Okapi
+import os
+
 
 app = Flask(__name__)
 
-# Commented: Remove HuggingFace model loading
+# Removed HuggingFace model loading
 # abstractive_summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
 
+#sentence splitter in place of nltk.tokenize to avoid extra dependency and memory usage
 def split_sentences(text):
-    sentences = re.split(r'(?<=[.!?]) +', text.strip())
-    return [sent.strip() for sent in sentences if sent.strip()]
+    sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z0-9"])', text.strip())
+    return [s.strip() for s in sentences if s.strip()]
+
+# BM25 helper function
+def tokenize(text):
+    return re.findall(r'\b\w+\b', text.lower())
+
 
 @app.route("/")
 def home():
@@ -36,6 +41,7 @@ def home():
 #     summary = summary_output[0]["summary_text"]
 #     return jsonify({"summary": summary})
 
+
 @app.route("/extractive", methods=["POST"])
 def extractive_summary():
     data = request.get_json()
@@ -43,29 +49,31 @@ def extractive_summary():
     if not text:
         return jsonify({"error": "No text provided"}), 400
 
-    # Tokenize sentences
     sentences = split_sentences(text)
-    if len(sentences) <= 2:
+    if len(sentences) < 2:
         return jsonify({"summary": text})
 
-    # TF-IDF vectorization
-    vectorizer = TfidfVectorizer(stop_words='english')
-    X = vectorizer.fit_transform(sentences)
+    tokenized_sentences = [tokenize(sent) for sent in sentences]
 
-    # Similarity matrix
-    sim_matrix = cosine_similarity(X)
+    # Initialize BM25
+    bm25 = BM25Okapi(tokenized_sentences)
 
-    # Combined sentence scores
-    tfidf_scores = X.sum(axis=1).A1
-    sim_scores = sim_matrix.sum(axis=1)
-    combined_scores = tfidf_scores + sim_scores
+    # Score each sentence against all other sentences
+    avg_scores = []
+    for i, sent in enumerate(tokenized_sentences):
+        # Score this sentence against the rest
+        scores = bm25.get_scores(sent)
+        avg_score = sum(scores) / len(scores)
+        avg_scores.append((avg_score, i))
 
-    ranked_sentences = [sent for _, sent in sorted(zip(combined_scores, sentences), reverse=True)]
+    # Sort by highest average BM25 score
+    ranked = sorted(avg_scores, reverse=True)
+    top_n = max(1, int(len(sentences) * 0.4))
+    selected_indexes = sorted([idx for _, idx in ranked[:top_n]])
 
-    # Top N sentences (1/3rd of original)
-    top_n = max(1, len(sentences) // 3)
-    summary = " ".join(ranked_sentences[:top_n])
+    summary = " ".join([sentences[i] for i in selected_indexes])
     return jsonify({"summary": summary})
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7000))
