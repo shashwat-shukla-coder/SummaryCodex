@@ -1,7 +1,7 @@
 # 📝 NoteCodex – Your Smart Note Assistant
 A full-stack note management application built with the MERN stack (MongoDB, Express, React, Node.js) and extended with a Flask-based summarization API to enhance productivity.
 
-🚀 Features
+## 🚀 Features
 ✅ CRUD Operations and bookmark facility: Seamlessly create, read, update, and delete your personal notes and feature to bookmark the important notes for easy acces along with search filtering feature.
 
 🔐 User Authentication: Secure login and registration with JWT-based authentication. All user data is protected and private.
