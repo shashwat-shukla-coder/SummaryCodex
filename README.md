@@ -41,22 +41,14 @@ Database	MongoDB (Mongoose ODM)
 AI APIs	Python (Flask), Transformers
 
 # 📦 Installation & Setup
-1. Clone the Repository
-git clone https:[//github.com/yourusername/note-app.git](https://github.com/shashwat-shukla-coder/SummaryCodex.git)
-cd note-app
-2. Install Node Dependencies
-# At root
-npm install
+| Step | Description                          | Command(s)                                                                             |
+| ---- | ------------------------------------ | -------------------------------------------------------------------------------------- |
+| 1️⃣  | **Clone the Repository**             | `git clone https://github.com/your-username/your-repo-name.git`<br>`cd your-repo-name` |
+| 2️⃣  | **Install Node Dependencies (Root)** | `npm install`                                                                          |
+| 3️⃣  | **Frontend Setup**                   | `cd frontend`<br>`npm install`<br>`npm start`                                          |
+| 4️⃣  | **Start Flask Summarizer API**       | `cd summarizer`<br>`pip install -r requirements.txt`<br>`python app.py`                |
 
-# Then move to frontend
-cd frontend
-npm install
-3. Set Up Flask Backend (Summarizer API)
-# In a new terminal
-cd summarizer
-pip install -r requirements.txt
-python app.py
-4. Environment Variables
+## Environment Variables
 Set up environment variables in a .env file (in both the main project and frontend if needed):
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
