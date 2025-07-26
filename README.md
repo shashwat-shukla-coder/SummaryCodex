@@ -2,7 +2,7 @@
 A full-stack note management application built with the MERN stack (MongoDB, Express, React, Node.js) and extended with a Flask-based summarization API to enhance productivity.
 
 🚀 Features
-✅ CRUD Operations: Seamlessly create, read, update, and delete your personal notes.
+✅ CRUD Operations and bookmark facility: Seamlessly create, read, update, and delete your personal notes and feature to bookmark the important notes for easy acces along with search filtering feature.
 
 🔐 User Authentication: Secure login and registration with JWT-based authentication. All user data is protected and private.
 
@@ -24,25 +24,25 @@ A full-stack note management application built with the MERN stack (MongoDB, Exp
 
 🛡️ Security & Middleware:
 
-Role-based route protection.
+- Auth middleware to check Authentication of the tokens.
 
-Custom error handlers for graceful failures.
+- Custom error handlers for graceful failures.
 
-Token-based user-specific access.
+- Token-based user-specific access.
 
-🛠️ Tech Stack
+# 🛠️ Tech Stack
 Layer	Technology
 Frontend	React, React-Bootstrap
-Backend	Node.js, Express.js
-API Comm.	Axios
+Backend	Node.js, Express.js javascript
+API Communications	Axios
 Auth	JWT (JSON Web Tokens)
 State Mgmt	Redux
 Database	MongoDB (Mongoose ODM)
 AI APIs	Python (Flask), Transformers
 
-📦 Installation & Setup
+# 📦 Installation & Setup
 1. Clone the Repository
-git clone https://github.com/yourusername/note-app.git
+git clone https:[//github.com/yourusername/note-app.git](https://github.com/shashwat-shukla-coder/SummaryCodex.git)
 cd note-app
 2. Install Node Dependencies
 # At root
