@@ -31,19 +31,19 @@ A full-stack note management application built with the MERN stack (MongoDB, Exp
 - Token-based user-specific access.
 
 # 🛠️ Tech Stack
-Layer	Technology
-Frontend	React, React-Bootstrap
-Backend	Node.js, Express.js javascript
-API Communications	Axios
-Auth	JWT (JSON Web Tokens)
-State Mgmt	Redux
-Database	MongoDB (Mongoose ODM)
-AI APIs	Python (Flask), Transformers
+- Layer	Technology
+- Frontend	React, React-Bootstrap
+- Backend	Node.js, Express.js javascript
+- API Communications	Axios
+- Auth	JWT (JSON Web Tokens)
+- State Mgmt	Redux
+- Database	MongoDB (Mongoose ODM)
+- AI APIs	Python (Flask), Transformers
 
 # 📦 Installation & Setup
 | Step | Description                          | Command(s)                                                                             |
 | ---- | ------------------------------------ | -------------------------------------------------------------------------------------- |
-| 1️⃣  | **Clone the Repository**             | `git clone https://github.com/your-username/your-repo-name.git`<br>`cd your-repo-name` |
+| 1️⃣  | **Clone the Repository**             | `git clone https://github.com/shashwat-shukla-coder/SummaryCodex.git` |
 | 2️⃣  | **Install Node Dependencies (Root)** | `npm install`                                                                          |
 | 3️⃣  | **Frontend Setup**                   | `cd frontend`<br>`npm install`<br>`npm start`                                          |
 | 4️⃣  | **Start Flask Summarizer API**       | `cd summarizer`<br>`pip install -r requirements.txt`<br>`python app.py`                |
