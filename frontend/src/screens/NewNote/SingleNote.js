@@ -63,7 +63,7 @@ const SingleNote = () => {
 
   return (
     <MainScreen
-      title="Edit Note"
+      title="Edit note"
       style={{
         fontWeight: "bold",
         backgroundColor: "#1e1e2f",

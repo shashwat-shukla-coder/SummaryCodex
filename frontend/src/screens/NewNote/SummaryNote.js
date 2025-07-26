@@ -112,7 +112,7 @@ const SummaryNote = () => {
 
   return (
     <MainScreen
-      title="Summarize"
+      title="Summarize note"
       style={{
         fontWeight: "bold",
         backgroundColor: "#1e1e2f",
@@ -239,7 +239,7 @@ const SummaryNote = () => {
                 style={{ backgroundColor: "#63b3ed", border: "none" }}
                 onClick={ExtractivesummarizeHandler}
               >
-                Extractive Summary
+                Summarize Note
               </Button>
               <Button
                 variant="danger"

@@ -138,17 +138,17 @@ const MyNotes = ({ search }) => {
   };
 
   return (
-    <MainScreen title={`${newname} Notes...`}>
+    <MainScreen title={`${newname} notes`}>
       <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
-          Create new Note
+          Create new note
         </Button>
       </Link>
       <Button
         style={{ marginLeft: 10, marginBottom: 6 }}
         size="lg"
         onClick={() => setShowBookmark(!showBookmark)}
-        variant={showBookmark ? "success" : "primary"}
+        variant={showBookmark ? "success" : "warning"}
       >
         {showBookmark ? "Show All Notes" : "Show Bookmarked Notes"}
       </Button>
@@ -220,20 +220,22 @@ const MyNotes = ({ search }) => {
                       style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}
                     >
                       <Link to={`/note/summary/${note._id}`}>
-                        <Button size="sm">Summary</Button>
+                        <Button size="m" variant="dark">
+                          Summary
+                        </Button>
                       </Link>
 
                       <Link
                         to={`/note/${note._id}`}
                         style={{ color: "inherit" }}
                       >
-                        <Button>Edit</Button>
+                        <Button size="m">Edit</Button>
                       </Link>
 
                       <Button
                         variant="danger"
-                        size="sm"
                         onClick={() => deleteHandler(note._id)}
+                        size="sm"
                       >
                         Delete
                       </Button>

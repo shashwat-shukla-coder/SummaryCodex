@@ -37,7 +37,7 @@ const CreateNote = () => {
 
   return (
     <MainScreen
-      title="Create a Note"
+      title="Create a note"
       style={{
         fontWeight: "bold",
         backgroundColor: "#1e1e2f",
