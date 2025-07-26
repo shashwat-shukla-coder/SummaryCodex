@@ -5,9 +5,16 @@
   border: none;
   outline: none;
 }
-
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+}
 .accordion-button {
   background-color: transparent;
+  text-align: left;
+  width: 100%;
   border: none;
   box-shadow: none;
   outline: none;
