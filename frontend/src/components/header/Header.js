@@ -28,15 +28,6 @@ function Header({ setSearch }) {
     navigate("/");
   };
 
-  const ModalWrapper = ({ onClose, children }) => (
-    <div className="login-container">
-      <Button variant="secondary" onClick={onClose} className="close-button">
-        X
-      </Button>
-      {children}
-    </div>
-  );
-
   const handleLoginClick = () => {
     setActiveModal("login");
   };
@@ -102,7 +93,6 @@ function Header({ setSearch }) {
                   size="md"
                   variant="outline-light"
                   className="me-2"
-
                 >
                   Sign In
                 </Button>
@@ -120,15 +110,16 @@ function Header({ setSearch }) {
             {/* Modals*/}
             {activeModal === "login" && (
               <div className="login-container">
-               
-                  <Login onSignUpClick={handleRegisterClick} activeModal={setActiveModal} />
-                
+                <Login
+                  onSignUpClick={handleRegisterClick}
+                  activeModal={setActiveModal}
+                />
               </div>
             )}
 
             {activeModal === "register" && (
-              <div className="login-container">              
-                  <Register activeModal={setActiveModal} />
+              <div className="login-container">
+                <Register activeModal={setActiveModal} />
               </div>
             )}
 
