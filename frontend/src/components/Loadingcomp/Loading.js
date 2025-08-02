@@ -9,6 +9,10 @@ const Loading = ({ size = 70 }) => {
         alignItems: "center",
         height: "100%",
         width: "100%",
+        color: "black",
+        position: "absolute",
+        zIndex: 1000,
+        background: "blur(50px)",
       }}
     >
       <Spinner style={{ width: size, height: size }} animation="border" />
