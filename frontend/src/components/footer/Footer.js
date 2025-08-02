@@ -17,13 +17,13 @@ const Footer = () => {
         position: "relative",
         bottom: "0",
         textAlign: "center",
+        color: "#111519ff",
       }}
     >
       <Container>
         <Row>
           <Col className="text-center-py-3">
-            &copy; {new Date().getFullYear()} Summary Lock. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} Summary Lock. All rights reserved.
           </Col>
         </Row>
       </Container>
