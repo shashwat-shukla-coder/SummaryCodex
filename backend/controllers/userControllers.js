@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       { id: userValidation._id }, // Use user ID or any unique identifier
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1d" }
+      { expiresIn: "1h" }
     );
 
     // Send the token back to the client
