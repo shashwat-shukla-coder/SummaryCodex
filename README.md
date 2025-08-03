@@ -1,4 +1,4 @@
-# 📝 NoteCodex – Your Smart Note Assistant
+# 📝 NoteCodex – Your Smart Note Assistant   Deployed at → [CLICK ME](https://notecodex-backend.onrender.com/)
 A full-stack note management application built with the MERN stack (MongoDB, Express, React, Node.js) and extended with a Flask-based summarization API to enhance productivity.
 
 ## 🚀 Features
