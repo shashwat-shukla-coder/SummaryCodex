@@ -38,13 +38,13 @@ A full-stack note management application built with the MERN stack (MongoDB, Exp
 
 # 🛠️ Tech Stack
 - Layer	Technology
-- Frontend	React, React-Bootstrap
-- Backend	Node.js, Express.js javascript
-- API Communications	Axios
-- Auth	JWT (JSON Web Tokens)
-- State Mgmt	Redux
-- Database	MongoDB (Mongoose ODM)
-- AI APIs	Python (Flask), Transformers
+- Frontend: 	React, React-Bootstrap
+- Backend:	Node.js, Express.js javascript
+- API Communications:	Axios
+- Auth:	JWT (JSON Web Tokens)
+- State Mgmt:	Redux
+- Database:	MongoDB (Mongoose ODM)
+- AI APIs:	Python (Flask), Transformers
 
 # 📦 Installation & Setup
 | Step | Description                          | Command(s)                                                                             |
@@ -63,8 +63,11 @@ Set up environment variables in a .env file (in both the main project and fronte
 
 📈 Future Scope
 Add Google OAuth login.
-Summarization caching for frequently accessed notes.
-Dark mode toggle 🌙.
+- Summarization caching for frequently accessed notes.
+- Dark mode toggle 🌙.
+- text generation for topics
+- OTP based option for recovering passwords
+
 Before running this project, ensure you have the following installed:  
 - Node.js  
 - MongoDB
