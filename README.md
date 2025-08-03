@@ -9,8 +9,14 @@ A full-stack note management application built with the MERN stack (MongoDB, Exp
 🧠 Summarization Engine:
 
 - ✨ Abstractive Summary: Condenses long notes using a T5-based deep learning model.
+  <details>
+  <summary>IMPORTANT</summary>
 
-- 📌 Extractive Summary: Highlights key sentences with sentence-transformers.
+  ⚠️ **Note**: Not abstractive model not actively deployed due to high RAM usage on free-tier hosting.  
+  💻 You can run it on your **local machine** easily by uncommenting out the abstractive logic i did in app.py and the backend controllers , routes.
+</details>
+
+- 📌 Extractive Summary: Condenses long notes using bm25 ranking into concise notes.
 
 - ⏱️ Benefit: Significantly reduces reading time for lengthy notes.
 
