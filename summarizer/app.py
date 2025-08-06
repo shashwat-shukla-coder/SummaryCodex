@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 # from transformers import pipeline  , No longer using abstractive summarization due to deployment memory issue of 512 ram
 import re
+from numpy import mean
 from rank_bm25 import BM25Okapi
 import os
 
@@ -58,19 +59,25 @@ def extractive_summary():
     tokenized_sentences = [tokenize(sent) for sent in sentences]
     bm25 = BM25Okapi(tokenized_sentences)
 
-    # Score each sentence against all other sentences
-    avg_scores = []
-    for i, sent in enumerate(tokenized_sentences):
-        # Score this sentence against the rest
-        scores = bm25.get_scores(sent)
-        avg_score = sum(scores) / len(scores)
-        avg_scores.append((avg_score, i))
+    # Score each sentence to all for comparrson
+    sentence_scores = []
+    all_tokens = [word for sent in tokenized_sentences for word in sent]
+    unique_tokens = list(set(all_tokens))
 
-    # Sort by highest average BM25 score
-    ranked = sorted(avg_scores, reverse=True)
-    top_n = max(1, int(len(sentences) * 0.4))#pick top 40% of sentences
+    for i, sent_tokens in enumerate(tokenized_sentences):
+        score = mean(bm25.get_scores(sent_tokens))
+        coverage = len(set(sent_tokens) & set(unique_tokens)) / len(unique_tokens)
+        combined_score = 0.7 * score + 0.3 * coverage
+        sentence_scores.append((combined_score, i))
+
+
+    ranked = sorted(sentence_scores, reverse=True)
+    if len(sentences) <= 5:
+        top_n = min(len(sentences), 2)
+    else:
+        top_n = max(1, int(len(sentences) * 0.4))
+
     selected_indexes = sorted([idx for _, idx in ranked[:top_n]])
-
     summary = " ".join([sentences[i] for i in selected_indexes])
     return jsonify({"summary": summary})
 
