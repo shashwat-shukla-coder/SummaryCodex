@@ -23,7 +23,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className="text-center-py-3">
-            &copy; {new Date().getFullYear()} Summary Lock. All rights reserved.
+            &copy; {new Date().getFullYear()} SummaryCodex. All rights reserved.
           </Col>
         </Row>
       </Container>
